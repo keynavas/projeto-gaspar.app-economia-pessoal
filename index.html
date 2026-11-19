@@ -1026,6 +1026,41 @@ main{padding-bottom:calc(176px + var(--safe-b))}
 .passos-mail{margin:0 0 18px;padding-left:22px;line-height:1.6;font-size:15px;color:#A8B3C7}
 .passos-mail li{margin:4px 0}.passos-mail b{color:#fff}
 [data-theme="light"] .passos-mail{color:var(--ink-soft)}[data-theme="light"] .passos-mail b{color:var(--ink)}
+
+/* ---------- nota fiscal (QR Code) ---------- */
+.nfopt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--card,#fff);color:var(--ink);border-radius:18px;padding:16px;margin:0 0 12px;font:inherit;cursor:pointer}
+.nfopt:hover{border-color:var(--ink-soft)}
+.nfopt b{display:block;font-size:17px;margin-bottom:3px}
+.nfopt .grow span{display:block;color:var(--ink-soft);font-size:14px;line-height:1.4}
+.nfopt .nfi{flex:none;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--paper-2);color:var(--ink)}
+.nfopt .chev{color:var(--ink-soft);font-size:22px}
+.nfcam{position:relative;border-radius:20px;overflow:hidden;background:#0d1512;aspect-ratio:1/1;max-height:52dvh;margin:0 auto}
+.nfcam video{width:100%;height:100%;object-fit:cover;display:block}
+.nfmira{position:absolute;inset:16%;border:3px solid rgba(255,255,255,.92);border-radius:18px;box-shadow:0 0 0 999px rgba(0,0,0,.35)}
+.nfstatus{position:absolute;left:0;right:0;bottom:0;margin:0;padding:12px 14px;color:#fff;font-size:14px;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.6))}
+.nfdica{text-align:center;font-size:14px;margin:12px 0 14px}
+.nfmais{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nfmais .btn{width:100%;justify-content:center;text-align:center;font-size:15px;padding-inline:10px}
+.nffoto{cursor:pointer}
+.nfload{display:flex;flex-direction:column;align-items:center;gap:14px;padding:34px 0;color:var(--ink-soft)}
+.spin{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--ink);animation:nfspin .8s linear infinite}
+@keyframes nfspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation-duration:2.4s}}
+.nferro{background:var(--paper-2);border-radius:16px;padding:16px;margin:0 0 18px;line-height:1.5}
+.nferro p{margin:0}
+.nfaviso{background:#FFF4D6;color:#5A4300;border-radius:14px;padding:12px 14px;margin:0 0 16px;font-size:14px;line-height:1.5}
+.nfaviso .link{color:inherit;font-weight:700;padding:0;margin-top:4px}
+.nfsum{display:flex;justify-content:space-between;align-items:baseline;padding:4px 2px 8px;border-bottom:1.5px solid var(--line);font-weight:600}
+.nfsum b{font-size:22px}
+.nfdesc{font-size:13px;margin:8px 2px 0}
+.nflist{list-style:none;margin:6px 0 0;padding:0;max-height:38dvh;overflow-y:auto}
+.nflist li{display:flex;align-items:center;gap:12px;padding:10px 2px;border-bottom:1px solid var(--line)}
+.nflist .ci{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--paper-2);font-size:17px}
+.nflist .grow{flex:1;min-width:0}
+.nflist .t{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nflist .s{display:block;color:var(--ink-soft);font-size:13px}
+@media (max-width:420px){.nfmais{grid-template-columns:1fr}}
+[data-theme="dark"] .nfaviso{background:rgba(234,179,8,.14);color:#F5D77A}
 </style>
 </head>
 <body>
@@ -1192,6 +1227,7 @@ const compraTotal = id => round2((S.itens[id] || []).reduce((s, i) => s + Number
 
 /* ===================== Icons ===================== */
 const I = {
+  qr: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>',
   resumo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg>',
   mercado: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/></svg>',
   lanc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 4v16M7 4 3 8M7 4l4 4M17 20V4M17 20l-4-4M17 20l4-4"/></svg>',
@@ -1280,6 +1316,20 @@ TRAD.push(
 ["Esse gasto passa do limite do mês","This expense goes over the month's limit","Este gasto supera el límite del mes"],["Cabem só mais","Only","Solo caben"],["em {x} sem tocar na meta de poupança. Com este gasto, você fica","more fit in {x} without touching your savings goal. With this expense, you'll be","más en {x} sin tocar tu meta de ahorro. Con este gasto, quedas"],["acima.","over.","por encima."],
 ["Você já passou","You're already","Ya te pasaste"],["do limite de {x}. Este gasto vai sair da sua meta de poupança.","over the {x} limit. This expense will come out of your savings goal.","del límite de {x}. Este gasto saldrá de tu meta de ahorro."],["Lançar mesmo assim","Add anyway","Registrar de todos modos"],
 ["Atenção: os gastos variáveis passaram do limite de {x}","Heads up: variable expenses went over the {x} limit","Atención: los gastos variables superaron el límite de {x}"],["Atenção: os gastos variáveis passaram {m} do limite de {x}","Heads up: variable expenses went {m} over the {x} limit","Atención: los gastos variables superaron en {m} el límite de {x}"],
+// ---------- nota fiscal (QR) ----------
+["Como você quer cadastrar esta compra?","How do you want to add this purchase?","¿Cómo quieres registrar esta compra?"],["Escanear QR Code da nota","Scan the receipt QR code","Escanear el QR del ticket"],["Os produtos, os preços, o mercado e a data entram sozinhos.","Products, prices, store and date are filled in for you.","Los productos, precios, el súper y la fecha se completan solos."],["Cadastrar manualmente","Add manually","Registrar manualmente"],["Você digita os itens enquanto compra ou no caixa.","You type the items while shopping or at checkout.","Escribes los productos mientras compras o en la caja."],
+["Escanear nota","Scan receipt","Escanear ticket"],["Abrindo a câmera…","Opening the camera…","Abriendo la cámara…"],["Aponte para o QR Code no rodapé da nota. Ele lê sozinho.","Point at the QR code at the bottom of the receipt. It reads automatically.","Apunta al QR al pie del ticket. Se lee solo."],["Usar foto da nota","Use a photo","Usar una foto"],["Colar link da nota","Paste receipt link","Pegar enlace del ticket"],["Procurando o QR Code…","Looking for the QR code…","Buscando el código QR…"],
+["Não foi possível carregar o leitor. Use a foto ou cole o link.","Couldn't load the reader. Use a photo or paste the link.","No se pudo cargar el lector. Usa una foto o pega el enlace."],["Leitor indisponível. Cole o link da nota.","Reader unavailable. Paste the receipt link.","Lector no disponible. Pega el enlace del ticket."],["Não deu para abrir essa foto.","Couldn't open that photo.","No se pudo abrir esa foto."],["Não achei o QR Code nessa foto. Tire de mais perto, com boa luz.","No QR code found in that photo. Take it closer, with good light.","No encontré el QR en esa foto. Tómala más cerca y con buena luz."],
+["Câmera indisponível aqui. Use a foto ou cole o link.","Camera unavailable here. Use a photo or paste the link.","Cámara no disponible aquí. Usa una foto o pega el enlace."],["Permita o uso da câmera para ler a nota, ou use a foto.","Allow camera access to read the receipt, or use a photo.","Permite usar la cámara para leer el ticket, o usa una foto."],["Não foi possível abrir a câmera. Use a foto ou cole o link.","Couldn't open the camera. Use a photo or paste the link.","No se pudo abrir la cámara. Usa una foto o pega el enlace."],
+["Link do QR Code","QR code link","Enlace del código QR"],["Leia o QR com a câmera do celular, copie o link que aparece e cole aqui.","Scan the QR with your phone camera, copy the link it shows and paste it here.","Lee el QR con la cámara del celular, copia el enlace y pégalo aquí."],["Ler nota","Read receipt","Leer ticket"],
+["Sem internet agora. Para ler a nota o Gaspar precisa consultar o site da Fazenda.","No internet right now. Gaspar needs to reach the tax office site to read the receipt.","Sin internet ahora. Gaspar necesita consultar el sitio de Hacienda para leer el ticket."],["Esse QR Code não é de uma nota fiscal. Procure o QR no rodapé da nota (NFC-e).","This QR code isn't from a receipt. Look for the QR at the bottom of the receipt (NFC-e).","Este QR no es de un ticket fiscal. Busca el QR al pie del ticket (NFC-e)."],
+["Lendo a nota","Reading receipt","Leyendo el ticket"],["Buscando os produtos no site da Fazenda…","Fetching the products from the tax office site…","Buscando los productos en el sitio de Hacienda…"],["Não foi possível ler a nota agora. Tente de novo em alguns minutos.","Couldn't read the receipt now. Try again in a few minutes.","No se pudo leer el ticket ahora. Intenta de nuevo en unos minutos."],
+["Não deu para ler a nota","Couldn't read the receipt","No se pudo leer el ticket"],["Tentar de novo","Try again","Intentar de nuevo"],["Escanear de novo","Scan again","Escanear de nuevo"],
+["Conferir nota","Review receipt","Revisar ticket"],["Data da compra","Purchase date","Fecha de compra"],["Essa nota já foi cadastrada","This receipt was already added","Este ticket ya fue registrado"],["em {d}. Salvar de novo vai duplicar os gastos.","on {d}. Saving again will duplicate the expenses.","el {d}. Guardar de nuevo duplicará los gastos."],["Abrir a compra já salva","Open the saved purchase","Abrir la compra guardada"],
+["Desconto de {m} da nota já dividido entre os itens.","Receipt discount of {m} already split across the items.","Descuento de {m} del ticket ya repartido entre los productos."],["Depois de salvar, toque em qualquer item para mudar a categoria ou o nome.","After saving, tap any item to change its category or name.","Después de guardar, toca cualquier producto para cambiar la categoría o el nombre."],["Salvar compra","Save purchase","Guardar compra"],
+["{n} itens salvos da nota","{n} items saved from the receipt","{n} productos guardados del ticket"],["{n} item salvo da nota","{n} item saved from the receipt","{n} producto guardado del ticket"],
+["Esse QR Code não leva ao site da Fazenda. Confira se é o QR da nota fiscal.","This QR code doesn't lead to the tax office site. Check that it's the receipt QR.","Este QR no lleva al sitio de Hacienda. Verifica que sea el QR del ticket."],["Esse QR Code não leva ao site da Fazenda.","This QR code doesn't lead to the tax office site.","Este QR no lleva al sitio de Hacienda."],["Esse QR Code não é de uma nota fiscal (NFC-e).","This QR code isn't from a receipt (NFC-e).","Este QR no es de un ticket fiscal (NFC-e)."],["Link da nota inválido.","Invalid receipt link.","Enlace del ticket no válido."],["Entre na sua conta para ler a nota.","Sign in to read the receipt.","Inicia sesión para leer el ticket."],
+["A Fazenda do seu estado não mostrou os produtos desta nota. Tente de novo em alguns minutos ou cadastre manualmente.","Your state's tax office didn't show the products of this receipt. Try again in a few minutes or add it manually.","Hacienda de tu estado no mostró los productos de este ticket. Intenta en unos minutos o regístralo manualmente."],["O site da Fazenda não respondeu agora. Tente de novo em alguns minutos.","The tax office site didn't respond. Try again in a few minutes.","El sitio de Hacienda no respondió. Intenta de nuevo en unos minutos."],
 // ---------- mercado ----------
 ["+ Nova ida ao mercado","+ New grocery trip","+ Nueva compra"],["Nova ida ao mercado","New grocery trip","Nueva compra en el súper"],["Nenhuma ida ao mercado neste mês.","No grocery trips this month.","Ninguna compra este mes."],["Toque em Nova ida ao mercado quando chegar ao caixa ou já durante as compras.","Tap New grocery trip at the checkout or while you shop.","Toca Nueva compra al llegar a la caja o mientras compras."],
 ["Mercado por categoria","Groceries by category","Supermercado por categoría"],["{n} itens","{n} items","{n} productos"],["{n} item","{n} item","{n} producto"],["Compra","Purchase","Compra"],["Começar compra","Start trip","Empezar compra"],["Nome do mercado","Store name","Nombre del súper"],["Ex.: Atacadão, Pão de Açúcar","E.g.: Walmart, Costco","Ej.: Mercadona, Carrefour"],
@@ -2018,6 +2068,197 @@ function formCompra(c) {
       else { S.month = new Date(dParts(row.data).getFullYear(), dParts(row.data).getMonth(), 1); S.compras = [nc]; S.itens = {}; }
       S.itens[nc.id] = []; saveCache(); closeSheet(); location.hash = `#/mercado/${nc.id}`; setTimeout(() => formItem(), 50);
     }
+  };
+}
+
+/* ===================== Nota fiscal (QR Code da NFC-e) ===================== */
+function escolherCompra() {
+  sheet(`<div class="nfwrap">${sheetHead("Nova ida ao mercado")}
+    <p class="muted" style="margin:-6px 0 16px">Como você quer cadastrar esta compra?</p>
+    <button type="button" class="nfopt" data-act="nfQR"><span class="nfi">${I.qr}</span><span class="grow"><b>Escanear QR Code da nota</b><span>Os produtos, os preços, o mercado e a data entram sozinhos.</span></span><span class="chev" aria-hidden="true">›</span></button>
+    <button type="button" class="nfopt" data-act="nfManual"><span class="nfi">${I.edit}</span><span class="grow"><b>Cadastrar manualmente</b><span>Você digita os itens enquanto compra ou no caixa.</span></span><span class="chev" aria-hidden="true">›</span></button>
+  </div>`);
+}
+
+let nfCam = null;
+function pararCamera() { if (nfCam) { nfCam.ativo = false; nfCam.stream?.getTracks().forEach(t => t.stop()); nfCam = null; } }
+function carregarJsQR() {
+  if (window.jsQR) return Promise.resolve(window.jsQR);
+  return new Promise((ok, erro) => { const s = document.createElement("script"); s.src = "https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"; s.onload = () => ok(window.jsQR); s.onerror = erro; document.head.appendChild(s); });
+}
+async function detectorQR() {
+  try { if ("BarcodeDetector" in window && (await BarcodeDetector.getSupportedFormats()).includes("qr_code")) { const d = new BarcodeDetector({ formats: ["qr_code"] }); return async src => (await d.detect(src))[0]?.rawValue || null; } } catch {}
+  const jsQR = await carregarJsQR(); const cv = document.createElement("canvas"), cx = cv.getContext("2d", { willReadFrequently: true });
+  return async src => {
+    const w = src.videoWidth || src.naturalWidth || src.width, h = src.videoHeight || src.naturalHeight || src.height; if (!w || !h) return null;
+    const k = Math.min(1, 1000 / Math.max(w, h)); cv.width = Math.round(w * k); cv.height = Math.round(h * k);
+    cx.drawImage(src, 0, 0, cv.width, cv.height);
+    return jsQR(cx.getImageData(0, 0, cv.width, cv.height).data, cv.width, cv.height, { inversionAttempts: "attemptBoth" })?.data || null;
+  };
+}
+async function lerQR() {
+  pararCamera();
+  sheet(`<div class="nfwrap">${sheetHead("Escanear nota")}
+    <div class="nfcam"><video id="nfVideo" playsinline muted autoplay></video><div class="nfmira" aria-hidden="true"></div><p id="nfStatus" class="nfstatus" role="status">Abrindo a câmera…</p></div>
+    <p class="muted nfdica">Aponte para o QR Code no rodapé da nota. Ele lê sozinho.</p>
+    <div class="nfmais">
+      <label class="btn ghost nffoto">Usar foto da nota<input id="nfFoto" type="file" accept="image/*" capture="environment" hidden></label>
+      <button type="button" class="btn ghost" data-act="nfColar">Colar link da nota</button>
+    </div>
+    <button type="button" class="link" data-act="nfManual" style="display:block;margin:14px auto 0">Cadastrar manualmente</button>
+  </div>`);
+  $("#sheet").addEventListener("close", pararCamera, { once: true });
+  const status = t => { const el = $("#nfStatus"); if (el) el.textContent = t; };
+  let detectar;
+  try { detectar = await detectorQR(); } catch { status("Não foi possível carregar o leitor. Use a foto ou cole o link."); }
+  $("#nfFoto").onchange = async e => {
+    const f = e.target.files?.[0]; if (!f) return;
+    if (!detectar) return toast("Leitor indisponível. Cole o link da nota.");
+    const img = new Image(); img.src = URL.createObjectURL(f);
+    try { await img.decode(); } catch { return toast("Não deu para abrir essa foto."); }
+    const v = await detectar(img).catch(() => null); URL.revokeObjectURL(img.src);
+    if (v) { pararCamera(); processarNota(v); } else toast("Não achei o QR Code nessa foto. Tire de mais perto, com boa luz.");
+  };
+  if (!navigator.mediaDevices?.getUserMedia) return status("Câmera indisponível aqui. Use a foto ou cole o link.");
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 } }, audio: false });
+    const video = $("#nfVideo"); if (!video) { stream.getTracks().forEach(t => t.stop()); return; }
+    nfCam = { stream, ativo: true }; video.srcObject = stream; await video.play().catch(() => {});
+    status("Procurando o QR Code…");
+    const cam = nfCam;
+    const loop = async () => {
+      if (!cam.ativo || !video.isConnected) return pararCamera();
+      if (detectar && video.readyState >= 2) { const v = await detectar(video).catch(() => null); if (v && cam.ativo) { navigator.vibrate?.(60); pararCamera(); return processarNota(v); } }
+      setTimeout(loop, 220);
+    };
+    loop();
+  } catch (e) { status(e?.name === "NotAllowedError" ? "Permita o uso da câmera para ler a nota, ou use a foto." : "Não foi possível abrir a câmera. Use a foto ou cole o link."); }
+}
+function colarLink() {
+  pararCamera();
+  sheet(`<form id="fLink" class="nfwrap">${sheetHead("Colar link da nota")}
+    <div class="field"><label for="nfUrl">Link do QR Code</label><input id="nfUrl" type="url" inputmode="url" placeholder="https://www.nfce.fazenda…gov.br/…" required></div>
+    <p class="muted" style="margin:-4px 0 16px;font-size:14px">Leia o QR com a câmera do celular, copie o link que aparece e cole aqui.</p>
+    <div class="actions"><button type="button" class="btn ghost" data-act="nfQR">Voltar</button><button class="btn green">Ler nota</button></div>
+  </form>`);
+  $("#fLink").onsubmit = e => { e.preventDefault(); processarNota($("#nfUrl").value.trim()); };
+  setTimeout(() => $("#nfUrl")?.focus(), 60);
+}
+
+const semAcento = s => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+function nomeBonito(s) {
+  return String(s || "").toLowerCase().replace(/\s+/g, " ").trim()
+    .replace(/(^|[\s(/-])([a-zà-ü])/g, (m, a, b) => a + b.toUpperCase())
+    .replace(/\b(\d+(?:[.,]\d+)?)\s?(Kg|G|Ml|L|Lt|Un|Cx|Pct)\b/gi, (m, n, u) => n + u.toLowerCase())
+    .replace(/\s+(Kg|Un)$/i, "");
+}
+function mercadoBonito(s) {
+  const t = String(s || "").replace(/\b(LTDA|EIRELI|EPP|S\/A|S\.A\.?|ME)\b\.?/gi, "").replace(/[\s,.-]+$/, "").trim();
+  return t ? nomeBonito(t) : "";
+}
+const NF_CATS = [
+  ["Bebidas alcoólicas", /\b(cerv|cerveja|vinho|vodka|whisk|cachaca|gin|licor|espumante|skol|brahma|heineken|budweiser|amstel|itaipava|chopp)/],
+  ["Churrasco e carvão", /\b(carvao|acendedor)/],
+  ["Bebê", /\b(fralda|lenco umed|pomada assadura|mamadeira)/],
+  ["Pet", /\b(racao|areia (gato|sanit)|petisco|whiskas|pedigree|golden|premier pet)/],
+  ["Descartáveis", /\b(copo desc|prato desc|guardanapo|papel toalha|papel alum|aluminio|filme pvc|saco (de )?lixo|saco lixo|talher desc)/],
+  ["Higiene pessoal", /\b(sabonete|shampoo|sh |condicionador|cr dent|creme dental|escova dent|desodorante|desod|papel hig|absorvente|fio dental|cotonete|aparelho barb|hidratante|protetor solar)/],
+  ["Limpeza", /\b(detergente|deterg|sabao|amaciante|desinfetante|agua sanit|alvejante|limpador|esponja|lava roupa|lava louca|multiuso|veja|omo|ype|pinho sol|lustra|cera|inseticida|saponaceo|bom bril|bombril|tira manchas)/],
+  ["Congelados", /\b(congel|sorvete|pizza|nuggets|hamburguer|hamb|lasanha|pao de queijo|batata palito|empanado)/],
+  ["Aves", /\b(frango|fgo|chester|peru|sobrecoxa|coxa|asa |file de peito|peito)/],
+  ["Peixaria", /\b(peixe|tilapia|salmao|camarao|bacalhau|merluza|pescada)/],
+  ["Açougue", /\b(patinho|alcatra|picanha|contra ?fil|coxao|acem|musculo|fraldinha|costela|maminha|cupim|carne|bov|suin|linguica|lingui|bacon|lombo|pernil|cupim|file mignon|moida|bisteca)/],
+  ["Frios e laticínios", /\b(queijo|qj|mussarela|mucarela|muss|presunto|mortadela|salame|requeijao|manteiga|margarina|ricota|cream cheese|provolone|parmesao|blanquet)/],
+  ["Leites e iogurtes", /\b(leite|lt |iogurte|iog|bebida lactea|coalhada|kefir)/],
+  ["Ovos", /\b(ovo|ovos)\b/],
+  ["Padaria", /\b(pao|paes|bisnag|bolo|rosca|torrada|sonho|baguete)/],
+  ["Hortifruti", /\b(banana|maca|laranja|limao|tomate|cebola|alho|batata|cenoura|alface|abobrinha|abobora|mamao|uva|melancia|melao|abacate|pepino|pimentao|manga|abacaxi|morango|mandioca|couve|brocolis|repolho|beterraba|chuchu|berinjela|kiwi|pera|tangerina|mexerica|cheiro verde|salsa|coentro|hortifruti|fruta|verdura|legume)/],
+  ["Grãos e cereais", /\b(arroz|feijao|lentilha|grao de bico|ervilha seca|milho de pipoca|canjica|quinoa)/],
+  ["Massas", /\b(macarrao|mac |espaguete|spaghetti|penne|parafuso|talharim|massa|nhoque|miojo|lamen)/],
+  ["Farinhas e confeitaria", /\b(farinha|fermento|amido|maizena|leite condensado|cr leite|creme de leite|chantilly|gelatina|granulado|coco ralado|leite de coco)/],
+  ["Enlatados e conservas", /\b(lata|milho verde|ervilha|atum|sardinha|extrato|palmito|azeitona|seleta|pepino conserva)/],
+  ["Temperos e molhos", /\b(molho|ketchup|maionese|mostarda|tempero|vinagre|caldo|sal |sal$|pimenta|oregano|colorau|shoyu|sazon)/],
+  ["Matinais", /\b(cafe|achocolatado|nescau|toddy|cereal|aveia|granola|cha |capuccino|cappuccino)/],
+  ["Biscoitos", /\b(biscoito|bisc|bolacha|cookie|wafer|cream cracker|rosquinha|salgadinho de trigo)/],
+  ["Doces e snacks", /\b(chocolate|choc|bala|chiclete|goma|salgadinho|doritos|ruffles|amendoim|pipoca|bombom|pacoca|doce|barra de cereal)/],
+  ["Bebidas", /\b(refri|refrig|refrigerante|coca|guarana|fanta|sprite|suco|agua|isotonico|energetico|cha gelado|h2oh)/],
+  ["Mercearia", /\b(oleo|acucar|azeite|adocante|farofa)/],
+];
+function catPalpite(produto) {
+  const h = S.historico.get(produto.trim().toLowerCase());
+  if (h?.categoria_id && catById(h.categoria_id)) return { id: h.categoria_id, modo: h.modo };
+  const n = " " + semAcento(produto).replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ") + " ";
+  const mc = cats("mercado");
+  for (const [nome, re] of NF_CATS) if (re.test(n)) { const c = mc.find(x => semAcento(x.nome) === semAcento(nome)); if (c) return { id: c.id }; }
+  return { id: null };
+}
+
+async function processarNota(url) {
+  pararCamera();
+  if (!navigator.onLine) return nfErro("Sem internet agora. Para ler a nota o Gaspar precisa consultar o site da Fazenda.", url);
+  if (!/^https?:\/\//i.test(url)) return nfErro("Esse QR Code não é de uma nota fiscal. Procure o QR no rodapé da nota (NFC-e).");
+  sheet(`<div class="nfwrap">${sheetHead("Lendo a nota")}<div class="nfload"><span class="spin" aria-hidden="true"></span><p role="status">Buscando os produtos no site da Fazenda…</p></div></div>`);
+  let data, error;
+  try { ({ data, error } = await sb.functions.invoke("ler-nfce", { body: { url } })); } catch (e) { error = e; }
+  if (error || !data || data.erro) {
+    let msg = data?.erro;
+    if (!msg && error?.context?.json) { try { msg = (await error.context.json()).erro; } catch {} }
+    return nfErro(msg || "Não foi possível ler a nota agora. Tente de novo em alguns minutos.", url);
+  }
+  revisarNota(data);
+}
+function nfErro(msg, url) {
+  sheet(`<div class="nfwrap">${sheetHead("Não deu para ler a nota")}
+    <div class="nferro"><p>${esc(msg)}</p></div>
+    <div class="actions">${url ? `<button type="button" class="btn ghost" data-act="nfTentar">Tentar de novo</button>` : `<button type="button" class="btn ghost" data-act="nfQR">Escanear de novo</button>`}<button type="button" class="btn green" data-act="nfManual">Cadastrar manualmente</button></div>
+  </div>`);
+  S.nfUltimaUrl = url || null;
+}
+
+async function revisarNota(nota) {
+  const itens = (nota.itens || []).map(i => {
+    const produto = nomeBonito(i.produto), p = catPalpite(produto);
+    const kg = /^(KG|KGS|QUILO)$/i.test(i.unidade || "") || p.modo === "kg";
+    return { produto, categoria_id: p.id, modo: kg ? "kg" : "un", quantidade: i.quantidade ? Math.round(i.quantidade * 1000) / 1000 : null, preco_unitario: i.preco_unitario != null ? round2(i.preco_unitario) : null, total: round2(i.total) };
+  });
+  const soma = round2(itens.reduce((s, i) => s + i.total, 0));
+  const desconto = Math.min(soma, round2(nota.desconto || 0));
+  // desconto da nota é dividido entre os itens, para o total bater com o que foi pago
+  if (desconto > 0 && soma > 0) {
+    let resto = desconto;
+    itens.forEach((i, k) => { const d = k === itens.length - 1 ? resto : round2(desconto * i.total / soma); i.total = Math.max(0, round2(i.total - d)); resto = round2(resto - d); });
+  }
+  const total = round2(itens.reduce((s, i) => s + i.total, 0));
+  const st = { mercado: mercadoBonito(nota.mercado), data: nota.data || todayISO(), chave: nota.chave || null, itens };
+  let jaTem = null;
+  if (st.chave) {
+    jaTem = S.compras.find(c => c.nfce_chave === st.chave) || null;
+    if (!jaTem && navigator.onLine) { try { const r = await sb.from("compras").select("id,data,mercado,nfce_chave").eq("nfce_chave", st.chave).limit(1); jaTem = r.data?.[0] || null; } catch {} }
+  }
+  const mercados = [...new Set(S.compras.map(x => x.mercado).filter(Boolean))];
+  sheet(`<form id="fNota" class="nfwrap">${sheetHead("Conferir nota")}
+    ${jaTem ? `<div class="nfaviso" role="alert"><b>Essa nota já foi cadastrada</b> em ${dLong(jaTem.data)}. Salvar de novo vai duplicar os gastos.<br><button type="button" class="link" data-act="nfAbrir" data-id="${jaTem.id}" data-data="${jaTem.data}">Abrir a compra já salva</button></div>` : ""}
+    <div class="field"><label for="nfM">Mercado</label><input id="nfM" list="dlMercN" value="${esc(st.mercado)}" placeholder="Nome do mercado"><datalist id="dlMercN">${mercados.map(m => `<option value="${esc(m)}">`).join("")}</datalist></div>
+    <div class="field"><label for="nfD">Data da compra</label><input id="nfD" type="date" value="${st.data}" required></div>
+    <div class="nfsum"><span>${itens.length} ${itens.length === 1 ? "item" : "itens"}</span><b class="num">${money(total)}</b></div>
+    ${desconto > 0 ? `<p class="muted nfdesc">Desconto de <span class="num">${money(desconto)}</span> da nota já dividido entre os itens.</p>` : ""}
+    <ul class="nflist">${itens.map(i => { const c = catById(i.categoria_id); return `<li><span class="ci" title="${esc(c?.nome || "Sem categoria")}">${c ? esc(c.icone || "•") : "🛒"}</span><span class="grow"><span class="t" translate="no">${esc(i.produto)}</span><span class="s num">${i.quantidade ? `${fmtIn(i.quantidade)} ${i.modo === "kg" ? "kg" : "un"}${i.preco_unitario != null ? ` × ${money(i.preco_unitario)}` : ""}` : ""}</span></span><b class="num">${money(i.total)}</b></li>`; }).join("")}</ul>
+    <p class="muted" style="font-size:14px;margin:12px 0 0">Depois de salvar, toque em qualquer item para mudar a categoria ou o nome.</p>
+    <div class="actions"><button type="button" class="btn ghost" data-act="close">Cancelar</button><button class="btn green">Salvar compra</button></div>
+  </form>`);
+  $("#fNota").onsubmit = async e => {
+    e.preventDefault();
+    const btn = e.submitter; if (btn) btn.disabled = true;
+    const row = { data: $("#nfD").value, mercado: $("#nfM").value.trim() || null, nfce_chave: jaTem ? null : st.chave };
+    const nc = { id: uuid(), user_id: S.user.id, ...row };
+    await write({ t: "insert", table: "compras", row: nc });
+    const novos = st.itens.map(i => ({ id: uuid(), user_id: S.user.id, compra_id: nc.id, ...i }));
+    for (const ni of novos) await write({ t: "insert", table: "compra_itens", row: ni });
+    for (const i of novos) S.historico.set(i.produto.toLowerCase(), { produto: i.produto, modo: i.modo, categoria_id: i.categoria_id, preco: i.preco_unitario, data: row.data, mercado: row.mercado });
+    if (row.data >= monthStart(S.month) && row.data <= monthEnd(S.month)) S.compras.unshift(nc);
+    else { S.month = new Date(dParts(row.data).getFullYear(), dParts(row.data).getMonth(), 1); S.compras = [nc]; S.itens = {}; }
+    S.itens[nc.id] = novos; saveCache(); closeSheet(); location.hash = `#/mercado/${nc.id}`;
+    toast(`${novos.length} ${novos.length === 1 ? "item salvo" : "itens salvos"} da nota`);
   };
 }
 
@@ -3190,7 +3431,12 @@ document.addEventListener("click", async e => {
     case "editNome": formNome(); break;
     case "mprev": S.month = new Date(S.month.getFullYear(), S.month.getMonth() - 1, 1); loadMonth(); break;
     case "mnext": S.month = new Date(S.month.getFullYear(), S.month.getMonth() + 1, 1); loadMonth(); break;
-    case "novaCompra": formCompra(); break;
+    case "novaCompra": escolherCompra(); break;
+    case "nfQR": lerQR(); break;
+    case "nfManual": pararCamera(); formCompra(); break;
+    case "nfColar": colarLink(); break;
+    case "nfTentar": if (S.nfUltimaUrl) processarNota(S.nfUltimaUrl); else lerQR(); break;
+    case "nfAbrir": { closeSheet(); const dt = b.dataset.data, d = dParts(dt); if (dt < monthStart(S.month) || dt > monthEnd(S.month)) { S.month = new Date(d.getFullYear(), d.getMonth(), 1); await loadMonth(); } location.hash = `#/mercado/${id}`; break; }
     case "editCompra": formCompra(S.compras.find(c => c.id === route()[1])); break;
     case "askDelCompra": askDelCompra(id); break;
     case "editMode": S.editCompra = route()[1]; render(); break;
