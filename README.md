@@ -35,7 +35,7 @@ O que está acontecendo agora, qual é o próximo compromisso, uma linha do temp
 ## Feito para o dia a dia
 
 ✅ Funciona no **celular e no computador**, com os mesmos dados nos dois
-✅ Instala como app, direto do navegador
+✅ Direto no navegador
 ✅ Continua funcionando **sem internet** e sincroniza quando a conexão volta
 ✅ **Modo claro e escuro**
 ✅ Em **português, inglês e espanhol**
