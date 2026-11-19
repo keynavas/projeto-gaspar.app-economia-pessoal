@@ -1060,6 +1060,12 @@ main{padding-bottom:calc(176px + var(--safe-b))}
 .nflist .t{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nflist .s{display:block;color:var(--ink-soft);font-size:13px}
 @media (max-width:420px){.nfmais{grid-template-columns:1fr}}
+.nfnovas{background:var(--paper-2);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.45;margin:10px 0 0}
+.nfgrupo{margin-top:14px}
+.nfgrupo h4{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0;padding:6px 2px;font-size:15px;font-weight:700}
+.nfgrupo .nflist{max-height:none}
+.nfgrupos{max-height:42dvh;overflow-y:auto}
+.nfnova{font-style:normal;font-size:12px;font-weight:700;background:var(--green-soft,rgba(34,165,90,.14));color:var(--green,#1A7F45);border-radius:99px;padding:2px 8px;margin-left:4px;vertical-align:2px}
 [data-theme="dark"] .nfaviso{background:rgba(234,179,8,.14);color:#F5D77A}
 </style>
 </head>
@@ -1154,6 +1160,7 @@ function renderSync() { const el = $("#sync"); if (!el) return; const n = getQ()
 
 /* ===================== Data ===================== */
 async function loadAll() {
+  if (navigator.onLine) { try { await sb.rpc("sincronizar_categorias"); } catch {} } // recebe categorias novas do app
   const [c, r, h, pf, pm, eh] = await Promise.all([
     sb.from("categorias").select("*").order("ordem"),
     sb.from("recorrencias").select("*").order("created_at"),
@@ -1263,7 +1270,7 @@ TRAD.push(
 ["Mudar para modo claro","Switch to light mode","Cambiar a modo claro"],["Mudar para modo escuro","Switch to dark mode","Cambiar a modo oscuro"],["Modo claro","Light mode","Modo claro"],["Modo escuro","Dark mode","Modo oscuro"],
 ["Idioma","Language","Idioma"],["Fechar","Close","Cerrar"],["Carregando…","Loading…","Cargando…"],["Olá,","Hi,","Hola,"],["Cancelar","Cancel","Cancelar"],["Salvar","Save","Guardar"],["Apagar","Delete","Eliminar"],["Editar","Edit","Editar"],["Voltar","Back","Volver"],
 ["Prévia do Gaspar com dados de exemplo. No app real tudo fica salvo na sua conta.","Gaspar preview with sample data. In the real app everything is saved to your account.","Vista previa de Gaspar con datos de ejemplo. En la app real todo se guarda en tu cuenta."],
-["Salvo","Saved","Guardado"],["Apagado","Deleted","Eliminado"],["Total","Total","Total"],["TOTAL","TOTAL","TOTAL"],["Total do mês:","Month total:","Total del mes:"],["Data","Date","Fecha"],["Descrição","Description","Descripción"],["Valor","Amount","Valor"],["Categoria","Category","Categoría"],["Categorias","Categories","Categorías"],["Sem categoria","No category","Sin categoría"],
+["Salvo","Saved","Guardado"],["Apagado","Deleted","Eliminado"],["Total","Total","Total"],["TOTAL","TOTAL","TOTAL"],["Total do mês:","Month total:","Total del mes:"],["Data","Date","Fecha"],["Descrição","Description","Descripción"],["Valor","Amount","Valor"],["Categoria","Category","Categoría"],["Categorias","Categories","Categorías"],
 ["{n} alterações aguardando internet","{n} changes waiting for internet","{n} cambios esperando internet"],["1 alteração aguardando internet","1 change waiting for internet","1 cambio esperando internet"],
 ["Sem conexão. Conecte-se à internet para o primeiro acesso.","No connection. Connect to the internet for your first sign-in.","Sin conexión. Conéctate a internet para el primer acceso."],
 ["Não foi possível salvar: {x}","Couldn't save: {x}","No se pudo guardar: {x}"],["Um lançamento offline foi descartado: {x}","An offline entry was discarded: {x}","Se descartó un registro sin conexión: {x}"],
@@ -1330,6 +1337,9 @@ TRAD.push(
 ["{n} itens salvos da nota","{n} items saved from the receipt","{n} productos guardados del ticket"],["{n} item salvo da nota","{n} item saved from the receipt","{n} producto guardado del ticket"],
 ["Esse QR Code não leva ao site da Fazenda. Confira se é o QR da nota fiscal.","This QR code doesn't lead to the tax office site. Check that it's the receipt QR.","Este QR no lleva al sitio de Hacienda. Verifica que sea el QR del ticket."],["Esse QR Code não leva ao site da Fazenda.","This QR code doesn't lead to the tax office site.","Este QR no lleva al sitio de Hacienda."],["Esse QR Code não é de uma nota fiscal (NFC-e).","This QR code isn't from a receipt (NFC-e).","Este QR no es de un ticket fiscal (NFC-e)."],["Link da nota inválido.","Invalid receipt link.","Enlace del ticket no válido."],["Entre na sua conta para ler a nota.","Sign in to read the receipt.","Inicia sesión para leer el ticket."],
 ["A Fazenda do seu estado não mostrou os produtos desta nota. Tente de novo em alguns minutos ou cadastre manualmente.","Your state's tax office didn't show the products of this receipt. Try again in a few minutes or add it manually.","Hacienda de tu estado no mostró los productos de este ticket. Intenta en unos minutos o regístralo manualmente."],["O site da Fazenda não respondeu agora. Tente de novo em alguns minutos.","The tax office site didn't respond. Try again in a few minutes.","El sitio de Hacienda no respondió. Intenta de nuevo en unos minutos."],
+["Como você quer cadastrar este gasto?","How do you want to add this expense?","¿Cómo quieres registrar este gasto?"],["Cada produto da nota entra sozinho, já na aba certa.","Each product on the receipt goes in by itself, in the right tab.","Cada producto del ticket entra solo, en la pestaña correcta."],["Você digita o valor e a descrição.","You type the amount and description.","Escribes el monto y la descripción."],
+["Loja","Store","Tienda"],["Nome da loja","Store name","Nombre de la tienda"],["nova aba","new tab","pestaña nueva"],["Nova categoria:","New category:","Nueva categoría:"],["Novas categorias:","New categories:","Nuevas categorías:"],[". Ela será criada ao salvar.",". It will be created when you save.",". Se creará al guardar."],[". Elas serão criadas ao salvar.",". They will be created when you save.",". Se crearán al guardar."],
+["Salvar gasto","Save expense","Guardar gasto"],["Salvar {n} gastos","Save {n} expenses","Guardar {n} gastos"],["Salvando…","Saving…","Guardando…"],["{n} gastos salvos da nota","{n} expenses saved from the receipt","{n} gastos guardados del ticket"],["{n} gasto salvo da nota","{n} expense saved from the receipt","{n} gasto guardado del ticket"],["Sem categoria","No category","Sin categoría"],
 // ---------- mercado ----------
 ["+ Nova ida ao mercado","+ New grocery trip","+ Nueva compra"],["Nova ida ao mercado","New grocery trip","Nueva compra en el súper"],["Nenhuma ida ao mercado neste mês.","No grocery trips this month.","Ninguna compra este mes."],["Toque em Nova ida ao mercado quando chegar ao caixa ou já durante as compras.","Tap New grocery trip at the checkout or while you shop.","Toca Nueva compra al llegar a la caja o mientras compras."],
 ["Mercado por categoria","Groceries by category","Supermercado por categoría"],["{n} itens","{n} items","{n} productos"],["{n} item","{n} item","{n} producto"],["Compra","Purchase","Compra"],["Começar compra","Start trip","Empezar compra"],["Nome do mercado","Store name","Nombre del súper"],["Ex.: Atacadão, Pão de Açúcar","E.g.: Walmart, Costco","Ej.: Mercadona, Carrefour"],
@@ -2072,12 +2082,21 @@ function formCompra(c) {
 }
 
 /* ===================== Nota fiscal (QR Code da NFC-e) ===================== */
-function escolherCompra() {
-  sheet(`<div class="nfwrap">${sheetHead("Nova ida ao mercado")}
-    <p class="muted" style="margin:-6px 0 16px">Como você quer cadastrar esta compra?</p>
-    <button type="button" class="nfopt" data-act="nfQR"><span class="nfi">${I.qr}</span><span class="grow"><b>Escanear QR Code da nota</b><span>Os produtos, os preços, o mercado e a data entram sozinhos.</span></span><span class="chev" aria-hidden="true">›</span></button>
-    <button type="button" class="nfopt" data-act="nfManual"><span class="nfi">${I.edit}</span><span class="grow"><b>Cadastrar manualmente</b><span>Você digita os itens enquanto compra ou no caixa.</span></span><span class="chev" aria-hidden="true">›</span></button>
+// ctx: { tipo: "mercado" } ou { tipo: "variavel", cat: id da aba }
+function escolherCompra(ctx = { tipo: "mercado" }) {
+  S.nfCtx = ctx;
+  const c = ctx.tipo === "variavel" ? catById(ctx.cat) : null;
+  const titulo = ctx.tipo === "mercado" ? "Nova ida ao mercado" : c ? `Gasto em ${esc(c.nome)}` : "Novo gasto variável";
+  sheet(`<div class="nfwrap">${sheetHead(titulo)}
+    <p class="muted" style="margin:-6px 0 16px">${ctx.tipo === "mercado" ? "Como você quer cadastrar esta compra?" : "Como você quer cadastrar este gasto?"}</p>
+    <button type="button" class="nfopt" data-act="nfQR"><span class="nfi">${I.qr}</span><span class="grow"><b>Escanear QR Code da nota</b><span>${ctx.tipo === "mercado" ? "Os produtos, os preços, o mercado e a data entram sozinhos." : "Cada produto da nota entra sozinho, já na aba certa."}</span></span><span class="chev" aria-hidden="true">›</span></button>
+    <button type="button" class="nfopt" data-act="nfManual"><span class="nfi">${I.edit}</span><span class="grow"><b>Cadastrar manualmente</b><span>${ctx.tipo === "mercado" ? "Você digita os itens enquanto compra ou no caixa." : "Você digita o valor e a descrição."}</span></span><span class="chev" aria-hidden="true">›</span></button>
   </div>`);
+}
+function nfManual() {
+  pararCamera();
+  const ctx = S.nfCtx || { tipo: "mercado" };
+  if (ctx.tipo === "mercado") formCompra(); else formLanc(null, { tipo: "saida_variavel", categoria_id: ctx.cat || null });
 }
 
 let nfCam = null;
@@ -2156,41 +2175,91 @@ function mercadoBonito(s) {
   const t = String(s || "").replace(/\b(LTDA|EIRELI|EPP|S\/A|S\.A\.?|ME)\b\.?/gi, "").replace(/[\s,.-]+$/, "").trim();
   return t ? nomeBonito(t) : "";
 }
-const NF_CATS = [
-  ["Bebidas alcoólicas", /\b(cerv|cerveja|vinho|vodka|whisk|cachaca|gin|licor|espumante|skol|brahma|heineken|budweiser|amstel|itaipava|chopp)/],
-  ["Churrasco e carvão", /\b(carvao|acendedor)/],
-  ["Bebê", /\b(fralda|lenco umed|pomada assadura|mamadeira)/],
-  ["Pet", /\b(racao|areia (gato|sanit)|petisco|whiskas|pedigree|golden|premier pet)/],
-  ["Descartáveis", /\b(copo desc|prato desc|guardanapo|papel toalha|papel alum|aluminio|filme pvc|saco (de )?lixo|saco lixo|talher desc)/],
-  ["Higiene pessoal", /\b(sabonete|shampoo|sh |condicionador|cr dent|creme dental|escova dent|desodorante|desod|papel hig|absorvente|fio dental|cotonete|aparelho barb|hidratante|protetor solar)/],
-  ["Limpeza", /\b(detergente|deterg|sabao|amaciante|desinfetante|agua sanit|alvejante|limpador|esponja|lava roupa|lava louca|multiuso|veja|omo|ype|pinho sol|lustra|cera|inseticida|saponaceo|bom bril|bombril|tira manchas)/],
-  ["Congelados", /\b(congel|sorvete|pizza|nuggets|hamburguer|hamb|lasanha|pao de queijo|batata palito|empanado)/],
-  ["Aves", /\b(frango|fgo|chester|peru|sobrecoxa|coxa|asa |file de peito|peito)/],
-  ["Peixaria", /\b(peixe|tilapia|salmao|camarao|bacalhau|merluza|pescada)/],
-  ["Açougue", /\b(patinho|alcatra|picanha|contra ?fil|coxao|acem|musculo|fraldinha|costela|maminha|cupim|carne|bov|suin|linguica|lingui|bacon|lombo|pernil|cupim|file mignon|moida|bisteca)/],
-  ["Frios e laticínios", /\b(queijo|qj|mussarela|mucarela|muss|presunto|mortadela|salame|requeijao|manteiga|margarina|ricota|cream cheese|provolone|parmesao|blanquet)/],
-  ["Leites e iogurtes", /\b(leite|lt |iogurte|iog|bebida lactea|coalhada|kefir)/],
-  ["Ovos", /\b(ovo|ovos)\b/],
-  ["Padaria", /\b(pao|paes|bisnag|bolo|rosca|torrada|sonho|baguete)/],
-  ["Hortifruti", /\b(banana|maca|laranja|limao|tomate|cebola|alho|batata|cenoura|alface|abobrinha|abobora|mamao|uva|melancia|melao|abacate|pepino|pimentao|manga|abacaxi|morango|mandioca|couve|brocolis|repolho|beterraba|chuchu|berinjela|kiwi|pera|tangerina|mexerica|cheiro verde|salsa|coentro|hortifruti|fruta|verdura|legume)/],
-  ["Grãos e cereais", /\b(arroz|feijao|lentilha|grao de bico|ervilha seca|milho de pipoca|canjica|quinoa)/],
-  ["Massas", /\b(macarrao|mac |espaguete|spaghetti|penne|parafuso|talharim|massa|nhoque|miojo|lamen)/],
-  ["Farinhas e confeitaria", /\b(farinha|fermento|amido|maizena|leite condensado|cr leite|creme de leite|chantilly|gelatina|granulado|coco ralado|leite de coco)/],
-  ["Enlatados e conservas", /\b(lata|milho verde|ervilha|atum|sardinha|extrato|palmito|azeitona|seleta|pepino conserva)/],
-  ["Temperos e molhos", /\b(molho|ketchup|maionese|mostarda|tempero|vinagre|caldo|sal |sal$|pimenta|oregano|colorau|shoyu|sazon)/],
-  ["Matinais", /\b(cafe|achocolatado|nescau|toddy|cereal|aveia|granola|cha |capuccino|cappuccino)/],
-  ["Biscoitos", /\b(biscoito|bisc|bolacha|cookie|wafer|cream cracker|rosquinha|salgadinho de trigo)/],
-  ["Doces e snacks", /\b(chocolate|choc|bala|chiclete|goma|salgadinho|doritos|ruffles|amendoim|pipoca|bombom|pacoca|doce|barra de cereal)/],
-  ["Bebidas", /\b(refri|refrig|refrigerante|coca|guarana|fanta|sprite|suco|agua|isotonico|energetico|cha gelado|h2oh)/],
-  ["Mercearia", /\b(oleo|acucar|azeite|adocante|farofa)/],
-];
-function catPalpite(produto) {
-  const h = S.historico.get(produto.trim().toLowerCase());
-  if (h?.categoria_id && catById(h.categoria_id)) return { id: h.categoria_id, modo: h.modo };
-  const n = " " + semAcento(produto).replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ") + " ";
-  const mc = cats("mercado");
-  for (const [nome, re] of NF_CATS) if (re.test(n)) { const c = mc.find(x => semAcento(x.nome) === semAcento(nome)); if (c) return { id: c.id }; }
-  return { id: null };
+
+// Catálogo de categorias: [nome, ícone, palavras]. A ordem importa (a primeira que bate vence).
+// As que a pessoa ainda não tem são criadas e ligadas para todo o app (tabela categorias_globais).
+const MED = "dipirona|paracetamol|ibuprofeno|dorflex|neosaldina|torsilax|buscopan|novalgina|tylenol|xarope|comprimido|comp |cpr|capsula|cps|pomada|colirio|antialergico|loratadina|omeprazol|amoxicilina|soro fisiologico|curativo|band aid|esparadrapo|gaze|termometro|preservativo|vitamina|polivitaminico|teste gravidez|\\d+ ?mg";
+const CAT_NOTA = {
+  mercado: [
+    ["Farmácia e saúde", "💊", MED],
+    ["Suplementos", "💪", "whey|creatina|bcaa|albumina|pre treino|hipercalorico"],
+    ["Tabacaria", "🚬", "cigarro|isqueiro|seda |tabaco|palheiro|charuto"],
+    ["Gás de cozinha", "🛢️", "botijao|gas glp|gas de cozinha|glp p13|recarga gas"],
+    ["Automotivo", "🚗", "oleo (de )?motor|lubrificante|aditivo radiador|arla|fluido de freio|cera automotiva|limpa para.?brisa|shampoo automotivo|aromatizante carro"],
+    ["Cama, mesa e banho", "🛏️", "toalha de banho|toalha de rosto|toalha de mesa|lencol|fronha|travesseiro|edredom|cobertor|manta|jogo de cama|tapete"],
+    ["Bebidas alcoólicas", "🍺", "cerv|cerveja|vinho|vodka|whisk|cachaca|gin |licor|espumante|skol|brahma|heineken|budweiser|amstel|itaipava|chopp|stella|corona|spaten|original 600"],
+    ["Churrasco e carvão", "🔥", "carvao|acendedor|espeto"],
+    ["Bebê", "🍼", "fralda|lenco umed|pomada assadura|mamadeira|chupeta|papinha"],
+    ["Pet", "🐾", "racao|areia (de )?gato|areia sanit|petisco|whiskas|pedigree|golden|premier pet|antipulga|coleira|tapete higienico"],
+    ["Papelaria", "✏️", "caneta|caderno|lapis|borracha|apontador|papel sulfite|papel a4|sulfite|cola bastao|cola branca|marca texto|fita adesiva|durex|envelope|grampeador|post.?it|regua"],
+    ["Eletrônicos e pilhas", "🔋", "pilha|bateria|carregador|cabo usb|cabo tipo|fone de ouvido|fone |lampada|extensao|adaptador|benjamim|pen ?drive|cartao de memoria|filtro de linha"],
+    ["Ferramentas", "🔨", "martelo|chave de fenda|chave philips|alicate|parafuso|prego|bucha|furadeira|trena|serrote|estilete|fita isolante|abracadeira"],
+    ["Jardinagem", "🪴", "terra vegetal|adubo|fertilizante|vaso|semente|substrato|mangueira|regador"],
+    ["Festas e decoração", "🎈", "vela de aniversario|vela aniv|balao|bexiga|confete|serpentina|decoracao|enfeite|festa"],
+    ["Brinquedos", "🧸", "brinquedo|boneca|carrinho de brinquedo|lego|pelucia|quebra.?cabeca|massinha"],
+    ["Roupas e calçados", "👕", "camiseta|camisa|meia |meias|cueca|calcinha|sutia|chinelo|sandalia|tenis|bermuda|calca |pijama|bone "],
+    ["Cosméticos e beleza", "💄", "esmalte|batom|base liquida|rimel|mascara de cilios|maquiagem|perfume|colonia|tintura|acetona|removedor|po compacto|delineador"],
+    ["Descartáveis", "🥡", "copo desc|prato desc|talher desc|guardanapo|papel toalha|papel alum|aluminio|filme pvc|plastico filme|saco (de )?lixo|saco lixo|marmitex|canudo"],
+    ["Higiene pessoal", "🧴", "sabonete|shampoo|sh |condicionador|cr dent|creme dental|escova dent|desodorante|desod|papel hig|absorvente|fio dental|cotonete|aparelho barb|lamina|hidratante|protetor solar|enxaguante|algodao"],
+    ["Limpeza", "🧽", "detergente|deterg|sabao|amaciante|desinfetante|agua sanit|alvejante|limpador|esponja|lava roupa|lava louca|multiuso|veja |omo |ype|pinho sol|lustra|cera |inseticida|saponaceo|bom ?bril|tira manchas|pano de chao|vassoura|rodo"],
+    ["Congelados", "🧊", "congel|sorvete|picole|pizza|nuggets|hamburguer|hamb |lasanha|pao de queijo|batata palito|empanado|polpa"],
+    ["Aves", "🍗", "frango|fgo|chester|peru |sobrecoxa|coxa |asa |file de peito|peito "],
+    ["Peixaria", "🐟", "peixe|tilapia|salmao|camarao|bacalhau|merluza|pescada|file de merluza"],
+    ["Açougue", "🥩", "patinho|alcatra|picanha|contra ?fil|coxao|acem|musculo|fraldinha|costela|maminha|cupim|carne|bov|suin|linguica|lingui|bacon|lombo|pernil|file mignon|moida|bisteca|calabresa"],
+    ["Frios e laticínios", "🧀", "queijo|qj|mussarela|mucarela|muss|presunto|mortadela|salame|requeijao|manteiga|margarina|ricota|cream cheese|provolone|parmesao|blanquet|peito de peru"],
+    ["Leites e iogurtes", "🥛", "leite (integral|desnat|semi|uht|longa)|leite |iogurte|iog |bebida lactea|coalhada|kefir|danone|danoninho"],
+    ["Ovos", "🥚", "ovo |ovos"],
+    ["Padaria", "🥖", "pao |paes|bisnag|bolo|rosca|torrada|sonho|baguete|croissant"],
+    ["Hortifruti", "🥬", "banana|maca |laranja|limao|tomate|cebola|alho|batata|cenoura|alface|abobrinha|abobora|mamao|uva |melancia|melao|abacate|pepino|pimentao|manga |abacaxi|morango|mandioca|couve|brocolis|repolho|beterraba|chuchu|berinjela|kiwi|pera |tangerina|mexerica|cheiro verde|salsa |coentro|rucula|agriao|hortifruti|fruta|verdura|legume"],
+    ["Grãos e cereais", "🌾", "arroz|feijao|lentilha|grao de bico|milho de pipoca|canjica|quinoa"],
+    ["Massas", "🍝", "macarrao|mac |espaguete|spaghetti|penne|parafuso|talharim|massa |nhoque|miojo|lamen"],
+    ["Farinhas e confeitaria", "🧁", "farinha|fermento|amido|maizena|leite condensado|cr leite|creme de leite|chantilly|gelatina|granulado|coco ralado|leite de coco"],
+    ["Enlatados e conservas", "🥫", "lata|milho verde|ervilha|atum|sardinha|extrato|palmito|azeitona|seleta|conserva"],
+    ["Temperos e molhos", "🧂", "molho|ketchup|maionese|mostarda|tempero|vinagre|caldo|sal |sal$|pimenta|oregano|colorau|shoyu|sazon"],
+    ["Matinais", "☕", "cafe|achocolatado|nescau|toddy|cereal|aveia|granola|cha |capuccino|cappuccino|sucrilhos"],
+    ["Biscoitos", "🍪", "biscoito|bisc |bolacha|cookie|wafer|cream cracker|rosquinha"],
+    ["Doces e snacks", "🍫", "chocolate|choc |bala |chiclete|goma |salgadinho|doritos|ruffles|cheetos|amendoim|pipoca|bombom|pacoca|doce |barra de cereal|batata chips"],
+    ["Bebidas", "🥤", "refri|refrig|refrigerante|coca|guarana|fanta|sprite|pepsi|suco|agua |agua$|isotonico|energetico|cha gelado|h2oh|del valle"],
+    ["Mercearia", "🍚", "oleo|acucar|azeite|adocante|farofa|polvilho"],
+  ],
+  variavel: [
+    ["Combustível", "⛽", "gasolina|etanol|alcool hidratado|alcool comum|diesel|gnv|combustivel|aditivada"],
+    ["Estacionamento e pedágio", "🅿️", "estacionamento|pedagio|zona azul|valet"],
+    ["Farmácia", "💊", MED + "|fralda|protetor solar|repelente"],
+    ["Suplementos", "💪", "whey|creatina|bcaa|albumina|pre treino|hipercalorico"],
+    ["Tabacaria", "🚬", "cigarro|isqueiro|seda |tabaco|palheiro|charuto|narguile|essencia"],
+    ["Gás de cozinha", "🛢️", "botijao|gas glp|gas de cozinha|glp p13|recarga gas"],
+    ["Bares e bebidas", "🍻", "cerv|cerveja|chopp|caipirinha|drink|dose |vinho|vodka|whisk|gin |long neck|heineken|brahma|skol|budweiser|stella|corona"],
+    ["Pet shop", "🐾", "racao|petisco|areia (de )?gato|areia sanit|antipulga|coleira|banho e tosa|tosa|pet"],
+    ["Beleza e cuidados", "💇", "shampoo|condicionador|esmalte|batom|perfume|colonia|maquiagem|tintura|hidratante|desodorante|sabonete|creme de pentear|mascara capilar|corte de cabelo|manicure|barba"],
+    ["Material de construção", "🧱", "cimento|areia |tijolo|argamassa|rejunte|tinta|massa corrida|cal |piso|porcelanato|cano |tubo pvc|joelho|vergalhao|brita|telha"],
+    ["Casa e manutenção", "🔧", "lampada|tomada|interruptor|cadeado|extensao|fechadura|torneira|chuveiro|resistencia|silicone|veda rosca|parafuso|bucha|martelo|chave de fenda|alicate"],
+    ["Papelaria", "✏️", "caneta|caderno|lapis|borracha|apontador|papel sulfite|sulfite|cola bastao|marca texto|fita adesiva|durex|envelope|grampeador|post.?it|regua|mochila escolar|estojo"],
+    ["Eletrônicos", "📱", "carregador|cabo usb|cabo tipo|fone|pilha|bateria|mouse|teclado|pen ?drive|cartao de memoria|capinha|pelicula|caixa de som|smartwatch|celular"],
+    ["Brinquedos", "🧸", "brinquedo|boneca|carrinho de brinquedo|lego|pelucia|quebra.?cabeca|massinha|jogo de tabuleiro"],
+    ["Jardinagem", "🪴", "terra vegetal|adubo|fertilizante|vaso|semente|substrato|mangueira|regador|muda "],
+    ["Festas e decoração", "🎈", "vela de aniversario|vela aniv|balao|bexiga|confete|serpentina|decoracao|enfeite|artigos para festa"],
+    ["Presentes", "🎁", "embrulho|papel de presente|cartao presente|vale presente|gift"],
+    ["Lazer", "🎉", "ingresso|cinema|teatro|show |parque|boliche"],
+    ["Fast food", "🍔", "lanche|hamburguer|cheeseburger|big mac|whopper|combo|batata frita|mc |nuggets|hot dog|cachorro quente|sanduiche|milk ?shake"],
+    ["Restaurantes", "🍽️", "refeicao|prato feito|self service|buffet|marmita|executivo|almoco|jantar|rodizio|porcao|a la carte|kg comida|comida kg"],
+    ["Padaria e café", "☕", "pao |paes|bolo|croissant|salgado|coxinha|esfiha|pao de queijo|cafe expresso|expresso|capuccino|cappuccino|cafe coado|sonho|torta|pingado|cafe com leite"],
+    ["Açougue", "🥩", "patinho|alcatra|picanha|contra ?fil|coxao|acem|musculo|fraldinha|costela|maminha|cupim|carne|bov|suin|linguica|bacon|lombo|pernil|file mignon|moida|bisteca|frango"],
+    ["Shopping", "🛍️", "camiseta|camisa|blusa|vestido|saia|calca |jaqueta|casaco|moletom|bermuda|short|meia |meias|cueca|calcinha|sutia|chinelo|sandalia|tenis|sapato|bota |bone |bolsa|carteira|oculos|relogio|cinto"],
+  ],
+};
+const CAT_RE = {}; for (const [t, l] of Object.entries(CAT_NOTA)) CAT_RE[t] = l.map(([nome, icone, p]) => [nome, icone, new RegExp(`(^|\\s)(${p})`)]);
+// Devolve { id } de uma categoria que a pessoa já tem, ou { novo: { nome, icone } } para criar
+function catPalpite(produto, tipo = "mercado", padrao = null) {
+  if (tipo === "mercado") { const h = S.historico.get(produto.trim().toLowerCase()); if (h?.categoria_id && catById(h.categoria_id)) return { id: h.categoria_id, modo: h.modo }; }
+  else { const prev = S.lancamentos.find(l => l.tipo === "saida_variavel" && l.categoria_id && semAcento(l.descricao) === semAcento(produto)); if (prev && catById(prev.categoria_id)) return { id: prev.categoria_id }; }
+  const n = " " + semAcento(produto).replace(/[^a-z0-9 ]/g, " ").replace(/\s+/g, " ").trim() + " ";
+  const minhas = cats(tipo);
+  for (const [nome, icone, re] of CAT_RE[tipo] || []) if (re.test(n)) {
+    const c = minhas.find(x => semAcento(x.nome) === semAcento(nome));
+    return c ? { id: c.id } : { novo: { nome, icone } };
+  }
+  return { id: padrao };
 }
 
 async function processarNota(url) {
@@ -2215,11 +2284,33 @@ function nfErro(msg, url) {
   S.nfUltimaUrl = url || null;
 }
 
+// Garante que todas as categorias novas existam (cria e liga para todo o app) e devolve nome → id
+async function garantirCategorias(tipo, nomes) {
+  const ids = {};
+  for (const nome of nomes) {
+    let c = cats(tipo).find(x => semAcento(x.nome) === semAcento(nome));
+    if (!c && navigator.onLine) {
+      try {
+        const { data: id, error } = await sb.rpc("ativar_categoria", { p_tipo: tipo, p_nome: nome });
+        if (!error && id) {
+          const r = await sb.from("categorias").select("*").eq("id", id);
+          c = r.data?.[0];
+          if (c && !S.categorias.some(x => x.id === c.id)) S.categorias.push(c);
+        }
+      } catch {}
+    }
+    ids[nome] = c?.id || null;
+  }
+  return ids;
+}
+
 async function revisarNota(nota) {
+  const ctx = S.nfCtx || { tipo: "mercado" }, merc = ctx.tipo === "mercado";
+  const padrao = merc ? null : (ctx.cat || cats("variavel").find(c => semAcento(c.nome) === "outros variaveis")?.id || null);
   const itens = (nota.itens || []).map(i => {
-    const produto = nomeBonito(i.produto), p = catPalpite(produto);
+    const produto = nomeBonito(i.produto), p = catPalpite(produto, merc ? "mercado" : "variavel", padrao);
     const kg = /^(KG|KGS|QUILO)$/i.test(i.unidade || "") || p.modo === "kg";
-    return { produto, categoria_id: p.id, modo: kg ? "kg" : "un", quantidade: i.quantidade ? Math.round(i.quantidade * 1000) / 1000 : null, preco_unitario: i.preco_unitario != null ? round2(i.preco_unitario) : null, total: round2(i.total) };
+    return { produto, categoria_id: p.id || null, novo: p.novo || null, modo: kg ? "kg" : "un", quantidade: i.quantidade ? Math.round(i.quantidade * 1000) / 1000 : null, preco_unitario: i.preco_unitario != null ? round2(i.preco_unitario) : null, total: round2(i.total) };
   });
   const soma = round2(itens.reduce((s, i) => s + i.total, 0));
   const desconto = Math.min(soma, round2(nota.desconto || 0));
@@ -2232,33 +2323,62 @@ async function revisarNota(nota) {
   const st = { mercado: mercadoBonito(nota.mercado), data: nota.data || todayISO(), chave: nota.chave || null, itens };
   let jaTem = null;
   if (st.chave) {
-    jaTem = S.compras.find(c => c.nfce_chave === st.chave) || null;
-    if (!jaTem && navigator.onLine) { try { const r = await sb.from("compras").select("id,data,mercado,nfce_chave").eq("nfce_chave", st.chave).limit(1); jaTem = r.data?.[0] || null; } catch {} }
+    if (merc) {
+      jaTem = S.compras.find(c => c.nfce_chave === st.chave) || null;
+      if (!jaTem && navigator.onLine) { try { const r = await sb.from("compras").select("id,data,mercado,nfce_chave").eq("nfce_chave", st.chave).limit(1); jaTem = r.data?.[0] || null; } catch {} }
+    } else {
+      jaTem = S.lancamentos.find(l => l.nfce_chave === st.chave) || null;
+      if (!jaTem && navigator.onLine) { try { const r = await sb.from("lancamentos").select("id,data,categoria_id,nfce_chave").eq("nfce_chave", st.chave).limit(1); jaTem = r.data?.[0] || null; } catch {} }
+    }
   }
+  const novas = [...new Map(itens.filter(i => i.novo).map(i => [i.novo.nome, i.novo])).values()];
+  const catDe = i => i.novo ? { nome: i.novo.nome, icone: i.novo.icone, nova: true } : catById(i.categoria_id);
+  // gastos variáveis: agrupa por aba para a pessoa ver onde cada coisa vai cair
+  const grupos = new Map(); if (!merc) for (const i of itens) { const k = i.novo ? "n:" + i.novo.nome : i.categoria_id || "_"; if (!grupos.has(k)) grupos.set(k, []); grupos.get(k).push(i); }
+  const linha = i => { const c = catDe(i); return `<li><span class="ci" title="${esc(c?.nome || "Sem categoria")}">${c ? esc(c.icone || "•") : "🛒"}</span><span class="grow"><span class="t" translate="no">${esc(i.produto)}</span><span class="s num">${merc ? `${esc(c?.nome || "Sem categoria")}${c?.nova ? " (nova)" : ""} · ` : ""}${i.quantidade ? `${fmtIn(i.quantidade)} ${i.modo === "kg" ? "kg" : "un"}${i.preco_unitario != null ? ` × ${money(i.preco_unitario)}` : ""}` : ""}</span></span><b class="num">${money(i.total)}</b></li>`; };
+  const lista = merc ? `<ul class="nflist">${itens.map(linha).join("")}</ul>`
+    : `<div class="nfgrupos">${[...grupos.values()].map(g => { const c = catDe(g[0]); const tot = round2(g.reduce((s, i) => s + i.total, 0)); return `<section class="nfgrupo"><h4><span>${c ? esc(c.icone || "•") : "📦"} ${esc(c?.nome || "Sem categoria")}${c?.nova ? ' <em class="nfnova">nova aba</em>' : ""}</span><b class="num">${money(tot)}</b></h4><ul class="nflist">${g.map(linha).join("")}</ul></section>`; }).join("")}</div>`;
   const mercados = [...new Set(S.compras.map(x => x.mercado).filter(Boolean))];
   sheet(`<form id="fNota" class="nfwrap">${sheetHead("Conferir nota")}
-    ${jaTem ? `<div class="nfaviso" role="alert"><b>Essa nota já foi cadastrada</b> em ${dLong(jaTem.data)}. Salvar de novo vai duplicar os gastos.<br><button type="button" class="link" data-act="nfAbrir" data-id="${jaTem.id}" data-data="${jaTem.data}">Abrir a compra já salva</button></div>` : ""}
-    <div class="field"><label for="nfM">Mercado</label><input id="nfM" list="dlMercN" value="${esc(st.mercado)}" placeholder="Nome do mercado"><datalist id="dlMercN">${mercados.map(m => `<option value="${esc(m)}">`).join("")}</datalist></div>
+    ${jaTem ? `<div class="nfaviso" role="alert"><b>Essa nota já foi cadastrada</b> em ${dLong(jaTem.data)}. Salvar de novo vai duplicar os gastos.${merc ? `<br><button type="button" class="link" data-act="nfAbrir" data-id="${jaTem.id}" data-data="${jaTem.data}">Abrir a compra já salva</button>` : ""}</div>` : ""}
+    <div class="field"><label for="nfM">${merc ? "Mercado" : "Loja"}</label><input id="nfM" list="dlMercN" value="${esc(st.mercado)}" placeholder="${merc ? "Nome do mercado" : "Nome da loja"}"><datalist id="dlMercN">${mercados.map(m => `<option value="${esc(m)}">`).join("")}</datalist></div>
     <div class="field"><label for="nfD">Data da compra</label><input id="nfD" type="date" value="${st.data}" required></div>
     <div class="nfsum"><span>${itens.length} ${itens.length === 1 ? "item" : "itens"}</span><b class="num">${money(total)}</b></div>
     ${desconto > 0 ? `<p class="muted nfdesc">Desconto de <span class="num">${money(desconto)}</span> da nota já dividido entre os itens.</p>` : ""}
-    <ul class="nflist">${itens.map(i => { const c = catById(i.categoria_id); return `<li><span class="ci" title="${esc(c?.nome || "Sem categoria")}">${c ? esc(c.icone || "•") : "🛒"}</span><span class="grow"><span class="t" translate="no">${esc(i.produto)}</span><span class="s num">${i.quantidade ? `${fmtIn(i.quantidade)} ${i.modo === "kg" ? "kg" : "un"}${i.preco_unitario != null ? ` × ${money(i.preco_unitario)}` : ""}` : ""}</span></span><b class="num">${money(i.total)}</b></li>`; }).join("")}</ul>
+    ${novas.length ? `<p class="nfnovas">${novas.length === 1 ? "Nova categoria:" : "Novas categorias:"} <b>${novas.map(n => esc(n.icone + " " + n.nome)).join(", ")}</b>${novas.length === 1 ? ". Ela será criada ao salvar." : ". Elas serão criadas ao salvar."}</p>` : ""}
+    ${lista}
     <p class="muted" style="font-size:14px;margin:12px 0 0">Depois de salvar, toque em qualquer item para mudar a categoria ou o nome.</p>
-    <div class="actions"><button type="button" class="btn ghost" data-act="close">Cancelar</button><button class="btn green">Salvar compra</button></div>
+    <div class="actions"><button type="button" class="btn ghost" data-act="close">Cancelar</button><button class="btn green">${merc ? "Salvar compra" : (itens.length === 1 ? "Salvar gasto" : `Salvar ${itens.length} gastos`)}</button></div>
   </form>`);
   $("#fNota").onsubmit = async e => {
     e.preventDefault();
-    const btn = e.submitter; if (btn) btn.disabled = true;
-    const row = { data: $("#nfD").value, mercado: $("#nfM").value.trim() || null, nfce_chave: jaTem ? null : st.chave };
-    const nc = { id: uuid(), user_id: S.user.id, ...row };
-    await write({ t: "insert", table: "compras", row: nc });
-    const novos = st.itens.map(i => ({ id: uuid(), user_id: S.user.id, compra_id: nc.id, ...i }));
-    for (const ni of novos) await write({ t: "insert", table: "compra_itens", row: ni });
-    for (const i of novos) S.historico.set(i.produto.toLowerCase(), { produto: i.produto, modo: i.modo, categoria_id: i.categoria_id, preco: i.preco_unitario, data: row.data, mercado: row.mercado });
-    if (row.data >= monthStart(S.month) && row.data <= monthEnd(S.month)) S.compras.unshift(nc);
-    else { S.month = new Date(dParts(row.data).getFullYear(), dParts(row.data).getMonth(), 1); S.compras = [nc]; S.itens = {}; }
-    S.itens[nc.id] = novos; saveCache(); closeSheet(); location.hash = `#/mercado/${nc.id}`;
-    toast(`${novos.length} ${novos.length === 1 ? "item salvo" : "itens salvos"} da nota`);
+    const btn = e.submitter; if (btn) { btn.disabled = true; btn.textContent = traduzTexto("Salvando…"); }
+    const tipoCatN = merc ? "mercado" : "variavel";
+    const ids = await garantirCategorias(tipoCatN, novas.map(n => n.nome));
+    for (const i of st.itens) if (i.novo) i.categoria_id = ids[i.novo.nome] || (merc ? null : padrao);
+    const data = $("#nfD").value, loja = $("#nfM").value.trim() || null, chave = jaTem ? null : st.chave;
+    const foraDoMes = data < monthStart(S.month) || data > monthEnd(S.month);
+    if (merc) {
+      const nc = { id: uuid(), user_id: S.user.id, data, mercado: loja, nfce_chave: chave };
+      await write({ t: "insert", table: "compras", row: nc });
+      const novos = st.itens.map(({ novo, ...i }) => ({ id: uuid(), user_id: S.user.id, compra_id: nc.id, ...i }));
+      for (const ni of novos) await write({ t: "insert", table: "compra_itens", row: ni });
+      for (const i of novos) S.historico.set(i.produto.toLowerCase(), { produto: i.produto, modo: i.modo, categoria_id: i.categoria_id, preco: i.preco_unitario, data, mercado: loja });
+      if (!foraDoMes) S.compras.unshift(nc);
+      else { S.month = new Date(dParts(data).getFullYear(), dParts(data).getMonth(), 1); S.compras = [nc]; S.itens = {}; }
+      S.itens[nc.id] = novos; saveCache(); closeSheet(); location.hash = `#/mercado/${nc.id}`;
+      toast(`${novos.length} ${novos.length === 1 ? "item salvo" : "itens salvos"} da nota`);
+    } else {
+      const novos = st.itens.map(i => ({ id: uuid(), user_id: S.user.id, tipo: "saida_variavel", descricao: i.produto, categoria_id: i.categoria_id, valor: i.total, data, pago: true, observacao: loja, nfce_chave: chave }));
+      for (const l of novos) await write({ t: "insert", table: "lancamentos", row: l });
+      closeSheet();
+      if (foraDoMes) { S.month = new Date(dParts(data).getFullYear(), dParts(data).getMonth(), 1); await loadMonth(); }
+      else { S.lancamentos.push(...novos); saveCache(); }
+      const abas = new Set(novos.map(l => l.categoria_id));
+      const destino = `#/variaveis/${(abas.size === 1 ? novos[0].categoria_id : ctx.cat) || novos[0].categoria_id || "mercado"}`;
+      if (location.hash === destino) render(); else location.hash = destino;
+      toast(`${novos.length} ${novos.length === 1 ? "gasto salvo" : "gastos salvos"} da nota`);
+    }
   };
 }
 
@@ -2534,7 +2654,7 @@ function viewVariaveis(sub) {
   } else {
     const list = (sub === "sem" ? orfaos : vlanc.filter(l => l.categoria_id === sub)).sort((a, b) => b.data.localeCompare(a.data));
     body = list.length ? linhasLanc(list, "saida_variavel", { semIcone: true }) : `<div class="empty"><strong>Nada em ${esc(sel.nome)} neste mês.</strong>Toque no botão abaixo para lançar um gasto.</div>`;
-    fab = `<button class="btn green fab" data-act="novoLanc" data-tipo="saida_variavel" data-cat="${sub === "sem" ? "" : sub}">+ Gasto em ${esc(sel.nome)}</button>`;
+    fab = `<button class="btn green fab" data-act="novoGastoVar" data-cat="${sub === "sem" ? "" : sub}">+ Gasto em ${esc(sel.nome)}</button>`;
   }
   return shell("Gastos variáveis", `
     <p class="muted num" style="margin:4px 0 12px">Total do mês: <b class="out">${money(total)}</b></p>
@@ -3431,9 +3551,10 @@ document.addEventListener("click", async e => {
     case "editNome": formNome(); break;
     case "mprev": S.month = new Date(S.month.getFullYear(), S.month.getMonth() - 1, 1); loadMonth(); break;
     case "mnext": S.month = new Date(S.month.getFullYear(), S.month.getMonth() + 1, 1); loadMonth(); break;
-    case "novaCompra": escolherCompra(); break;
+    case "novaCompra": escolherCompra({ tipo: "mercado" }); break;
+    case "novoGastoVar": escolherCompra({ tipo: "variavel", cat: b.dataset.cat || null }); break;
     case "nfQR": lerQR(); break;
-    case "nfManual": pararCamera(); formCompra(); break;
+    case "nfManual": nfManual(); break;
     case "nfColar": colarLink(); break;
     case "nfTentar": if (S.nfUltimaUrl) processarNota(S.nfUltimaUrl); else lerQR(); break;
     case "nfAbrir": { closeSheet(); const dt = b.dataset.data, d = dParts(dt); if (dt < monthStart(S.month) || dt > monthEnd(S.month)) { S.month = new Date(d.getFullYear(), d.getMonth(), 1); await loadMonth(); } location.hash = `#/mercado/${id}`; break; }
