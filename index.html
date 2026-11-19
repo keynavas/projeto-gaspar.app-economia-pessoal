@@ -2113,7 +2113,7 @@ function nfManual() {
 }
 
 let nfCam = null;
-function pararCamera() { if (nfCam) { nfCam.ativo = false; nfCam.stream?.getTracks().forEach(t => t.stop()); nfCam = null; } }
+function pararCamera() { if (nfCam) { nfCam.ativo = false; nfCam.stream?.getTracks().forEach(t => t.stop()); nfCam = null; } const v = document.getElementById("nfVideo"); if (v) { try { v.pause(); } catch {} v.srcObject = null; } }
 function carregarJsQR() {
   if (window.jsQR) return Promise.resolve(window.jsQR);
   return new Promise((ok, erro) => { const s = document.createElement("script"); s.src = "https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"; s.onload = () => ok(window.jsQR); s.onerror = erro; document.head.appendChild(s); });
@@ -2137,12 +2137,14 @@ async function detectorQR() {
     const centro = f => { const c = Math.round(lado * f); return [(w - c) / 2, (h - c) / 2, c, c]; };
     if (foto) {
       // foto da nota: o QR costuma estar no rodapé; tenta a imagem inteira, o centro e as partes de baixo, em vários tamanhos
-      const regioes = [[0, 0, w, h, 2000], [0, 0, w, h, 1300], [...centro(0.7), 1200], [0, h * 0.5, w, h * 0.5, 1600], [0, h * 0.66, w, h * 0.34, 1400], [...centro(0.45), 1000], [0, 0, w, h, 800], [0, h * 0.33, w, h * 0.67, 1600]];
-      for (const [x, y, rw, rh, m] of regioes) { const r = ler(src, x, y, rw, rh, m); if (r) return r; await new Promise(z => setTimeout(z)); }
-      return null;
+      const regioes = [[0, 0, w, h, 1400], [...centro(0.7), 1100], [0, h * 0.5, w, h * 0.5, 1300], [0, h * 0.66, w, h * 0.34, 1200], [...centro(0.45), 900], [0, 0, w, h, 900], [0, h * 0.33, w, h * 0.67, 1200]];
+      let achou = null;
+      for (const [x, y, rw, rh, m] of regioes) { achou = ler(src, x, y, rw, rh, m); if (achou) break; await new Promise(z => setTimeout(z, 30)); }
+      cv.width = cv.height = 1; // devolve a memória do desenho
+      return achou;
     }
     vez++;
-    return vez % 3 ? ler(src, ...centro(0.72), 900) : ler(src, 0, 0, w, h, 1100);
+    return vez % 3 ? ler(src, ...centro(0.72), 720) : ler(src, 0, 0, w, h, 960);
   };
 }
 // escolhe a lente principal (as grande-angulares não focam de perto); no iPhone, a "dual/triple" troca para macro sozinha
@@ -2172,19 +2174,24 @@ async function lerQR(deviceId) {
   const status = t => { const el = $("#nfStatus"); if (el) el.textContent = traduzTexto(t); };
   let detectar;
   try { detectar = await detectorQR(); } catch { status("Não foi possível carregar o leitor. Use a foto ou cole o link."); }
+  // a câmera ao vivo e a câmera do celular abertas juntas estouram a memória do aparelho
+  $("#nfFoto").closest("label").addEventListener("pointerdown", pararCamera);
+  $("#nfFoto").addEventListener("click", pararCamera);
   $("#nfFoto").onchange = async e => {
     const f = e.target.files?.[0]; if (!f) return;
     if (!detectar) return toast("Leitor indisponível. Cole o link da nota.");
     pararCamera(); status("Procurando o QR Code na foto…");
-    const img = new Image(); img.src = URL.createObjectURL(f);
-    try { await img.decode(); } catch { return toast("Não deu para abrir essa foto."); }
-    const v = await detectar(img, true).catch(() => null); URL.revokeObjectURL(img.src);
+    let img = null, url = null;
+    try { img = await createImageBitmap(f, { resizeWidth: 1800, resizeQuality: "high" }); if (img.width > 1800 || img.width < 50) { img.close?.(); img = null; } } catch { img = null; }
+    if (!img) { url = URL.createObjectURL(f); img = new Image(); img.src = url; try { await img.decode(); } catch { URL.revokeObjectURL(url); return toast("Não deu para abrir essa foto."); } }
+    const v = await detectar(img, true).catch(() => null);
+    if (url) URL.revokeObjectURL(url); img.close?.(); img = null;
     if (v) processarNota(v); else { toast("Não achei o QR Code nessa foto. Tire de mais perto, com boa luz."); status("Não achei o QR Code nessa foto."); }
     e.target.value = "";
   };
   if (!navigator.mediaDevices?.getUserMedia) return status("Câmera indisponível aqui. Use a foto ou cole o link.");
   try {
-    const base = { width: { ideal: 1920 }, height: { ideal: 1080 } };
+    const base = { width: { ideal: 1280 }, height: { ideal: 720 } };
     let stream = await navigator.mediaDevices.getUserMedia({ video: deviceId ? { deviceId: { exact: deviceId }, ...base } : { facingMode: { ideal: "environment" }, ...base }, audio: false });
     let cams = [];
     try { cams = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput"); } catch {}
@@ -2223,7 +2230,7 @@ async function lerQR(deviceId) {
       if (!cam.ativo || !video.isConnected) return pararCamera();
       if (detectar && video.readyState >= 2) { const v = await detectar(video).catch(() => null); if (v && cam.ativo) { navigator.vibrate?.(60); pararCamera(); return processarNota(v); } }
       if (!avisou && Date.now() - t0 > 9000) { avisou = true; status("Ainda não achei. Afaste um pouco o celular ou tire uma foto."); }
-      setTimeout(loop, 150);
+      setTimeout(loop, 260);
     };
     loop();
   } catch (e) { status(e?.name === "NotAllowedError" ? "Permita o uso da câmera para ler a nota, ou use a foto." : "Não foi possível abrir a câmera. Use a foto ou cole o link."); }

@@ -1,5 +1,5 @@
 // Gaspar — service worker: app abre sem internet; dados ficam no Supabase + fila local
-const CACHE = "gaspar-v52";
+const CACHE = "gaspar-v53";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg", "./icon-192.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
