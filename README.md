@@ -1,4 +1,4 @@
-link: https://gasparapp.vercel.app ( em desenvolvimento )
+
 
 # Gaspar: saiba com o que você gasta e comece a economizar de verdade
 
