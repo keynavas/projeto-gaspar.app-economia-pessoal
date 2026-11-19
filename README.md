@@ -69,7 +69,7 @@ O Gaspar **não acessa conta bancária nem cartão**. Você registra só o que q
 
 ## Experimente
 
-👉 **[link do Gaspar]**
+👉 ** https://gasparapp.vercel.app **
 
 Se você também vive se perguntando para onde foi o salário, testa e me conta o que achou. Sugestões são muito bem-vindas! 🙌
 
