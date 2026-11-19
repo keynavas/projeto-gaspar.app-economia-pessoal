@@ -1,0 +1,26 @@
+{
+  "id": "/",
+  "name": "Gaspar — economia pessoal",
+  "short_name": "Gaspar",
+  "description": "Organize salário, gastos fixos e variáveis, idas ao mercado, poupança e a agenda da sua rotina em um só lugar.",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05070D",
+  "theme_color": "#05070D",
+  "categories": ["finance", "productivity", "lifestyle"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "screenshots/celular-resumo.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Resumo do mês com o que sobrou e os gastos" },
+    { "src": "screenshots/celular-agenda.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Agenda da rotina com horários e cores" },
+    { "src": "screenshots/pc-resumo.png", "sizes": "1280x800", "type": "image/png", "form_factor": "wide", "label": "Resumo no computador" },
+    { "src": "screenshots/pc-agenda.png", "sizes": "1280x800", "type": "image/png", "form_factor": "wide", "label": "Agenda no computador" }
+  ]
+}

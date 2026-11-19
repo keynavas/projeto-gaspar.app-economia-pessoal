@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Política de privacidade — Gaspar</title><meta name="description" content="Como o Gaspar trata os seus dados.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#05070D;--soft:#4B5568;--line:#E3E7EF;--paper:#F3F5F9;--white:#fff;--blue:#2563EB;--red:#BE185D;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--ink:#E6EAF2;--soft:#9AA5BC;--line:#1F2940;--paper:#05070D;--white:#0E1424;--red:#F472B6}}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65}
+header{background:radial-gradient(120% 140% at 100% 0%,rgba(37,99,235,.35),transparent 60%),#05070D;color:#fff;padding:48px 24px 40px}
+header .in,main{max-width:720px;margin:0 auto}
+header a.logo{color:#fff;text-decoration:none;font-weight:800;font-size:26px;letter-spacing:-.02em}
+header h1{font-size:clamp(30px,6vw,44px);line-height:1.1;letter-spacing:-.02em;margin:22px 0 10px}
+header p{margin:0;color:#B8C4DC;font-size:16px}
+main{padding:32px 24px 72px}
+h2{font-size:21px;letter-spacing:-.01em;margin:38px 0 8px}
+p,li{color:var(--soft)}p b,li b{color:var(--ink)}
+ul{padding-left:22px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:22px}
+a{color:var(--blue)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:14px;font-weight:600;color:var(--soft)}
+input{font:inherit;font-size:16px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+input:focus{outline:2px solid var(--blue);outline-offset:1px}
+button{font:inherit;font-weight:700;font-size:16px;border:0;border-radius:99px;padding:14px 22px;cursor:pointer;background:var(--blue);color:#fff}
+button.danger{background:var(--red)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.msg{padding:12px 14px;border-radius:12px;font-size:15px;margin-bottom:14px}
+.msg.err{background:rgba(190,24,93,.1);color:var(--red)}.msg.ok{background:rgba(22,163,74,.12);color:#15803D}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px;padding:0;list-style:none}
+.toc a{display:block;font-size:14px;text-decoration:none;padding:6px 12px;border-radius:99px;background:var(--white);border:1px solid var(--line);color:var(--ink)}
+footer{max-width:720px;margin:0 auto;padding:0 24px 48px;font-size:14px;color:var(--soft)}
+</style>
+</head><body>
+<header><div class="in"><a class="logo" href="./">Gaspar</a><h1>Política de privacidade</h1><p>Atualizada em 18 de novembro de 2026</p></div></header>
+<main>
+<p>O Gaspar é um app de organização financeira pessoal e de agenda. Esta página explica, em linguagem simples, quais dados o app guarda, para que servem e como você pode apagá-los. Ela segue a Lei Geral de Proteção de Dados (LGPD, Lei nº 13.709/2018).</p>
+<ul class="toc"><li><a href="#dados">Dados guardados</a></li><li><a href="#uso">Para que servem</a></li><li><a href="#onde">Onde ficam</a></li><li><a href="#direitos">Seus direitos</a></li><li><a href="#apagar">Apagar a conta</a></li><li><a href="#contato">Contato</a></li></ul>
+
+<h2 id="dados">Quais dados o Gaspar guarda</h2>
+<ul>
+<li><b>Conta:</b> seu e-mail e sua senha. A senha é guardada pelo serviço de autenticação de forma criptografada; ninguém consegue lê-la.</li>
+<li><b>Nome ou apelido:</b> o nome que você escolhe para o app usar com você.</li>
+<li><b>Dados que você digita:</b> entradas, gastos fixos e variáveis, idas ao mercado e seus itens, depósitos e metas de poupança, compromissos e rotinas da agenda, categorias.</li>
+<li><b>Preferências no aparelho:</b> idioma, modo claro ou escuro e uma cópia temporária dos seus dados para o app abrir sem internet. Isso fica só no seu celular ou computador.</li>
+</ul>
+<p>O Gaspar <b>não</b> acessa sua conta bancária, cartões, contatos, fotos ou localização, e não pede nenhum desses dados.</p>
+
+<h2 id="uso">Para que os dados são usados</h2>
+<ul>
+<li>Mostrar seus números, gráficos, comparativos e agenda em qualquer aparelho em que você entrar.</li>
+<li>Enviar o código de confirmação de e-mail e o código de troca de senha.</li>
+</ul>
+<p>Os dados <b>não</b> são vendidos, alugados nem compartilhados para publicidade. O app não tem anúncios e não usa ferramentas de rastreamento ou análise de comportamento.</p>
+
+<h2 id="onde">Onde os dados ficam</h2>
+<ul>
+<li><b>Banco de dados e login:</b> Supabase, em servidores na região de São Paulo. Cada conta só consegue ler os próprios dados (regras de segurança por usuário no banco).</li>
+<li><b>Hospedagem do app:</b> Vercel, que pode registrar dados técnicos de acesso, como endereço IP e navegador, para funcionamento e segurança.</li>
+<li><b>Fontes do texto:</b> carregadas do Google Fonts, que recebe o endereço IP do aparelho ao baixá-las.</li>
+<li><b>E-mails com código:</b> enviados por um provedor de e-mail transacional contratado para isso.</li>
+</ul>
+<p>Toda a comunicação entre o app e os servidores é criptografada (HTTPS).</p>
+
+<h2 id="tempo">Por quanto tempo</h2>
+<p>Os dados ficam guardados enquanto sua conta existir. Quando você apaga a conta, eles são apagados na hora do banco de dados. Cópias de segurança automáticas do provedor podem levar até 30 dias para serem substituídas.</p>
+
+<h2 id="direitos">Seus direitos</h2>
+<p>Pela LGPD, você pode a qualquer momento: confirmar que tratamos seus dados, acessá-los, corrigi-los, pedir uma cópia (no app: Configurações → Baixar backup) e pedir que sejam apagados.</p>
+
+<h2 id="apagar">Como apagar sua conta e seus dados</h2>
+<ul>
+<li><b>No app:</b> Configurações → Privacidade e dados → Apagar minha conta e todos os dados.</li>
+<li><b>Pela web, sem instalar o app:</b> <a href="excluir-conta.html">página de exclusão de conta</a>.</li>
+<li><b>Por e-mail:</b> escreva para <a href="mailto:suporte.gasparapp@gmail.com">suporte.gasparapp@gmail.com</a> a partir do e-mail da conta.</li>
+</ul>
+<p>São apagados: conta, nome, entradas, gastos, compras, poupança, agenda, categorias e preferências.</p>
+
+<h2 id="criancas">Crianças</h2>
+<p>O Gaspar não é destinado a menores de 13 anos e não coleta dados de crianças de propósito.</p>
+
+<h2 id="mudancas">Mudanças nesta política</h2>
+<p>Se esta política mudar, a data no topo será atualizada e, em mudanças importantes, o app avisará.</p>
+
+<h2 id="contato">Contato</h2>
+<p>Dúvidas ou pedidos sobre seus dados: <a href="mailto:suporte.gasparapp@gmail.com">suporte.gasparapp@gmail.com</a>.</p>
+</main>
+<footer>Gaspar · economia pessoal</footer>
+</body></html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apagar conta — Gaspar</title><meta name="description" content="Peça a exclusão da sua conta do Gaspar e de todos os dados.">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#05070D;--soft:#4B5568;--line:#E3E7EF;--paper:#F3F5F9;--white:#fff;--blue:#2563EB;--red:#BE185D;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--ink:#E6EAF2;--soft:#9AA5BC;--line:#1F2940;--paper:#05070D;--white:#0E1424;--red:#F472B6}}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Bricolage Grotesque",system-ui,sans-serif;background:var(--paper);color:var(--ink);font-size:17px;line-height:1.65}
+header{background:radial-gradient(120% 140% at 100% 0%,rgba(37,99,235,.35),transparent 60%),#05070D;color:#fff;padding:48px 24px 40px}
+header .in,main{max-width:720px;margin:0 auto}
+header a.logo{color:#fff;text-decoration:none;font-weight:800;font-size:26px;letter-spacing:-.02em}
+header h1{font-size:clamp(30px,6vw,44px);line-height:1.1;letter-spacing:-.02em;margin:22px 0 10px}
+header p{margin:0;color:#B8C4DC;font-size:16px}
+main{padding:32px 24px 72px}
+h2{font-size:21px;letter-spacing:-.01em;margin:38px 0 8px}
+p,li{color:var(--soft)}p b,li b{color:var(--ink)}
+ul{padding-left:22px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:22px}
+a{color:var(--blue)}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:14px;font-weight:600;color:var(--soft)}
+input{font:inherit;font-size:16px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+input:focus{outline:2px solid var(--blue);outline-offset:1px}
+button{font:inherit;font-weight:700;font-size:16px;border:0;border-radius:99px;padding:14px 22px;cursor:pointer;background:var(--blue);color:#fff}
+button.danger{background:var(--red)}
+button:disabled{opacity:.45;cursor:not-allowed}
+.msg{padding:12px 14px;border-radius:12px;font-size:15px;margin-bottom:14px}
+.msg.err{background:rgba(190,24,93,.1);color:var(--red)}.msg.ok{background:rgba(22,163,74,.12);color:#15803D}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px;padding:0;list-style:none}
+.toc a{display:block;font-size:14px;text-decoration:none;padding:6px 12px;border-radius:99px;background:var(--white);border:1px solid var(--line);color:var(--ink)}
+footer{max-width:720px;margin:0 auto;padding:0 24px 48px;font-size:14px;color:var(--soft)}
+</style>
+</head><body>
+<header><div class="in"><a class="logo" href="./">Gaspar</a><h1>Apagar sua conta do Gaspar</h1><p>Sem precisar instalar ou abrir o app</p></div></header>
+<main>
+<p>Ao apagar a conta, saem <b>para sempre</b>: seu e-mail de acesso, nome, entradas, gastos fixos e variáveis, idas ao mercado, poupança, metas, agenda, rotinas, categorias e preferências. Nada fica guardado no banco de dados depois disso.</p>
+<p>Também dá para apagar dentro do app, em <b>Configurações → Privacidade e dados</b>.</p>
+
+<div class="card" id="box">
+  <div id="msg"></div>
+  <form id="fEntrar" novalidate>
+    <p style="margin-top:0">Entre com a conta que você quer apagar:</p>
+    <div class="field"><label for="em">E-mail</label><input id="em" type="email" autocomplete="email" required></div>
+    <div class="field"><label for="pw">Senha</label><input id="pw" type="password" autocomplete="current-password" required></div>
+    <button id="bEntrar">Continuar</button>
+  </form>
+  <form id="fApagar" novalidate hidden>
+    <p style="margin-top:0">Conta: <b id="quem"></b></p>
+    <div class="field"><label for="cf">Para confirmar, digite <b>APAGAR</b></label><input id="cf" autocomplete="off" autocapitalize="characters"></div>
+    <button class="danger" id="bApagar" disabled>Apagar conta para sempre</button>
+  </form>
+</div>
+
+<h2>Esqueceu a senha ou não consegue entrar?</h2>
+<p>Use “Esqueci minha senha” no app para receber um código, ou escreva para <a href="mailto:suporte.gasparapp@gmail.com">suporte.gasparapp@gmail.com</a> a partir do e-mail da conta pedindo a exclusão. O pedido é atendido em até 7 dias.</p>
+<p><a href="privacidade.html">Política de privacidade</a></p>
+</main>
+<footer>Gaspar · economia pessoal</footer>
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+const sb = createClient("https://yvlvtpssplbasuebimsx.supabase.co", "sb_publishable_z9MSgUFVu0Ez6sHRcp_dcA_Nij0VqXc", { auth: { persistSession: false } });
+const $ = s => document.querySelector(s);
+const msg = (t, ok) => $("#msg").innerHTML = t ? `<div class="msg ${ok ? "ok" : "err"}" role="${ok ? "status" : "alert"}">${t}</div>` : "";
+$("#fEntrar").onsubmit = async e => {
+  e.preventDefault(); msg("");
+  const email = $("#em").value.trim(), password = $("#pw").value;
+  if (!email || !password) return msg("Preencha e-mail e senha.");
+  $("#bEntrar").disabled = true;
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  $("#bEntrar").disabled = false;
+  if (error) return msg(/confirm/i.test(error.message) ? "Este e-mail ainda não foi confirmado. Escreva para o contato abaixo para pedir a exclusão." : "E-mail ou senha incorretos.");
+  $("#quem").textContent = data.user.email; $("#fEntrar").hidden = true; $("#fApagar").hidden = false; $("#cf").focus();
+};
+$("#cf").addEventListener("input", () => $("#bApagar").disabled = $("#cf").value.trim().toUpperCase() !== "APAGAR");
+$("#fApagar").onsubmit = async e => {
+  e.preventDefault();
+  if (!confirm("Apagar a conta e todos os dados agora? Não dá para desfazer.")) return;
+  $("#bApagar").disabled = true; $("#bApagar").textContent = "Apagando…";
+  const { error } = await sb.rpc("apagar_minha_conta");
+  if (error) { $("#bApagar").disabled = false; $("#bApagar").textContent = "Apagar conta para sempre"; return msg("Não foi possível apagar agora. Tente de novo ou escreva para o contato abaixo."); }
+  await sb.auth.signOut();
+  $("#fApagar").hidden = true; msg("Pronto. Sua conta e todos os seus dados foram apagados do Gaspar.", true);
+};
+</script>
+</body></html>
