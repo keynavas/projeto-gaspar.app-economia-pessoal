@@ -1022,6 +1022,10 @@ main{padding-bottom:calc(176px + var(--safe-b))}
 [data-theme="light"] .as-auth .catcell{background:#fff;border-color:#E3E7EF;color:var(--ink)}
 [data-theme="light"] .as-auth .ola{color:var(--ink-soft)!important}[data-theme="light"] .as-auth .ola b{color:var(--ink)!important}
 [data-theme="light"] .auth .previewhint{background:#FEF3C7;color:#78350F;border-color:#FCD34D}[data-theme="light"] .auth .previewhint b{color:#78350F}
+
+.passos-mail{margin:0 0 18px;padding-left:22px;line-height:1.6;font-size:15px;color:#A8B3C7}
+.passos-mail li{margin:4px 0}.passos-mail b{color:#fff}
+[data-theme="light"] .passos-mail{color:var(--ink-soft)}[data-theme="light"] .passos-mail b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -1037,6 +1041,10 @@ const SUPABASE_URL = "https://yvlvtpssplbasuebimsx.supabase.co";
 const SUPABASE_KEY = "sb_publishable_z9MSgUFVu0Ez6sHRcp_dcA_Nij0VqXc";
 // Gaspar gratuito: sem teste de 7 dias, sem assinatura e sem bloqueio. Para cobrar no futuro, troque para false.
 const GRATUITO = true;
+// O e-mail padrão do Supabase só traz LINK de confirmação. Depois de configurar o SMTP próprio
+// e colar os modelos com {{ .Token }} (emails-gaspar.html), troque para true: o app volta a pedir o código de 6 dígitos.
+const EMAIL_COM_CODIGO = false;
+let authSenha = "";
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
 
 /* ===================== Helpers ===================== */
@@ -1268,7 +1276,7 @@ TRAD.push(
 ["Tipos de gasto variável","Variable expense types","Tipos de gasto variable"],["nenhum gasto","no expenses","ningún gasto"],["{n} gastos","{n} expenses","{n} gastos"],["{n} gasto","{n} expense","{n} gasto"],["{n} compras","{n} trips","{n} compras"],["{n} compra","{n} trip","{n} compra"],
 ["+ Gasto em {x}","+ Expense in {x}","+ Gasto en {x}"],["Gasto em {x}","Expense in {x}","Gasto en {x}"],["Nada em {x} neste mês.","Nothing in {x} this month.","Nada en {x} este mes."],["Toque no botão abaixo para lançar um gasto.","Tap the button below to add an expense.","Toca el botón de abajo para registrar un gasto."],
 ["Novo gasto variável","New variable expense","Nuevo gasto variable"],["Nenhum gasto variável neste mês.","No variable expenses this month.","Ningún gasto variable este mes."],
-["Ex.: Remédio, Protetor solar","E.g.: Medicine, Sunscreen","Ej.: Medicamento, Protector solar"],["Ex.: Pizza, Japonês","E.g.: Pizza, Sushi","Ej.: Pizza, Sushi"],["Ex.: McDonald's, Burger King","E.g.: McDonald's, Burger King","Ej.: McDonald's, Burger King"],["Ex.: Tênis, Camiseta","E.g.: Sneakers, T-shirt","Ej.: Zapatillas, Camiseta"],["Ex.: Gasolina","E.g.: Gas","Ej.: Gasolina"],["Ex.: Uber, 99, táxi","E.g.: Uber, 99, taxi","Ej.: Uber, 99, taxi"],["Ex.: Ônibus, Metrô, Trem, recarga do bilhete","E.g.: Bus, Subway, Train, card top-up","Ej.: Autobús, Metro, Tren, recarga de tarjeta"],["Ex.: Cinema, Presente, Conserto","E.g.: Movies, Gift, Repair","Ej.: Cine, Regalo, Reparación"],
+["Ex.: Remédio, Protetor solar","E.g.: Medicine, Sunscreen","Ej.: Medicamento, Protector solar"],["Ex.: Picanha, Frango, Linguiça","E.g.: Steak, Chicken, Sausage","Ej.: Picaña, Pollo, Chorizo"],["Ex.: Pizza, Japonês","E.g.: Pizza, Sushi","Ej.: Pizza, Sushi"],["Ex.: McDonald's, Burger King","E.g.: McDonald's, Burger King","Ej.: McDonald's, Burger King"],["Ex.: Tênis, Camiseta","E.g.: Sneakers, T-shirt","Ej.: Zapatillas, Camiseta"],["Ex.: Gasolina","E.g.: Gas","Ej.: Gasolina"],["Ex.: Uber, 99, táxi","E.g.: Uber, 99, taxi","Ej.: Uber, 99, taxi"],["Ex.: Ônibus, Metrô, Trem, recarga do bilhete","E.g.: Bus, Subway, Train, card top-up","Ej.: Autobús, Metro, Tren, recarga de tarjeta"],["Ex.: Cinema, Presente, Conserto","E.g.: Movies, Gift, Repair","Ej.: Cine, Regalo, Reparación"],
 ["Esse gasto passa do limite do mês","This expense goes over the month's limit","Este gasto supera el límite del mes"],["Cabem só mais","Only","Solo caben"],["em {x} sem tocar na meta de poupança. Com este gasto, você fica","more fit in {x} without touching your savings goal. With this expense, you'll be","más en {x} sin tocar tu meta de ahorro. Con este gasto, quedas"],["acima.","over.","por encima."],
 ["Você já passou","You're already","Ya te pasaste"],["do limite de {x}. Este gasto vai sair da sua meta de poupança.","over the {x} limit. This expense will come out of your savings goal.","del límite de {x}. Este gasto saldrá de tu meta de ahorro."],["Lançar mesmo assim","Add anyway","Registrar de todos modos"],
 ["Atenção: os gastos variáveis passaram do limite de {x}","Heads up: variable expenses went over the {x} limit","Atención: los gastos variables superaron el límite de {x}"],["Atenção: os gastos variáveis passaram {m} do limite de {x}","Heads up: variable expenses went {m} over the {x} limit","Atención: los gastos variables superaron en {m} el límite de {x}"],
@@ -1420,6 +1428,12 @@ TRAD.push(
 ["Conecte-se à internet para assinar.","Connect to the internet to subscribe.","Conéctate a internet para suscribirte."],["Abrindo pagamento…","Opening payment…","Abriendo pago…"],["Confirmando com o Google…","Confirming with Google…","Confirmando con Google…"],["Assinatura ativa! Obrigado por assinar o Gaspar.","Subscription active! Thanks for subscribing to Gaspar.","¡Suscripción activa! Gracias por suscribirte a Gaspar."],
 ["Prévia: assinatura simulada como ativa.","Preview: subscription simulated as active.","Vista previa: suscripción simulada como activa."],["Não foi possível assinar: {x}","Couldn't subscribe: {x}","No se pudo suscribir: {x}"],["Esta assinatura foi feita pelo site. Para gerenciar, abra o Gaspar no navegador.","This subscription was made on the website. To manage it, open Gaspar in a browser.","Esta suscripción se hizo en el sitio. Para gestionarla, abre Gaspar en el navegador."],
 ["Prévia: renovação alterada.","Preview: renewal changed.","Vista previa: renovación cambiada."],["Não foi possível abrir: {x}","Couldn't open: {x}","No se pudo abrir: {x}"],["Confirmando seu pagamento…","Confirming your payment…","Confirmando tu pago…"],["O pagamento ainda está sendo confirmado. Volte em alguns minutos.","Your payment is still being confirmed. Check back in a few minutes.","El pago aún se está confirmando. Vuelve en unos minutos."],
+["Confirme seu e-mail","Confirm your email","Confirma tu correo"],["Abra o link no seu e-mail","Open the link in your email","Abre el enlace en tu correo"],["Enviamos um e-mail para","We sent an email to","Enviamos un correo a"],["Abra a mensagem e toque no link de confirmação.","Open the message and tap the confirmation link.","Abre el mensaje y toca el enlace de confirmación."],
+["Toque no link da mensagem para criar uma senha nova. Ele abre o Gaspar já na tela da senha.","Tap the link in the message to create a new password. It opens Gaspar right on the password screen.","Toca el enlace del mensaje para crear una contraseña nueva. Abre Gaspar directo en la pantalla de contraseña."],
+["Abra o e-mail do Gaspar (procure também em spam ou promoções).","Open the email from Gaspar (also check spam or promotions).","Abre el correo de Gaspar (revisa también spam o promociones)."],["Toque no link de confirmação. Se abrir neste aparelho, você já entra.","Tap the confirmation link. If it opens on this device, you're signed in.","Toca el enlace de confirmación. Si se abre en este dispositivo, ya entras."],["Se abriu em outro aparelho, volte aqui e toque em","If it opened on another device, come back and tap","Si se abrió en otro dispositivo, vuelve y toca"],["Já confirmei","I've confirmed","Ya confirmé"],
+["Já confirmei, entrar","I've confirmed, sign in","Ya confirmé, entrar"],["Reenviar e-mail","Resend email","Reenviar correo"],["Reenviar e-mail ({n}s)","Resend email ({n}s)","Reenviar correo ({n}s)"],["Prévia: nenhum e-mail é enviado. Toque em Já confirmei.","Preview: no email is sent. Tap I've confirmed.","Vista previa: no se envía ningún correo. Toca Ya confirmé."],
+["Seu e-mail ainda não foi confirmado. Toque no link que enviamos ou peça outro e-mail.","Your email isn't confirmed yet. Tap the link we sent or request another email.","Tu correo aún no está confirmado. Toca el enlace que enviamos o pide otro correo."],["Se {x} tiver conta, o e-mail já está a caminho.","If {x} has an account, the email is on its way.","Si {x} tiene cuenta, el correo ya va en camino."],
+["Entre com seu e-mail e senha.","Sign in with your email and password.","Entra con tu correo y contraseña."],["Ainda não recebemos a confirmação. Toque no link do e-mail e tente de novo.","We haven't received the confirmation yet. Tap the link in the email and try again.","Aún no recibimos la confirmación. Toca el enlace del correo e inténtalo de nuevo."],
 // ---------- categorias padrão ----------
 ["Açougue","Butcher","Carnicería"],["Aves","Poultry","Aves"],["Peixaria","Fish","Pescadería"],["Frios e laticínios","Deli and dairy","Fiambres y lácteos"],["Leites e iogurtes","Milk and yogurt","Leche y yogur"],["Ovos","Eggs","Huevos"],["Hortifruti","Produce","Frutas y verduras"],["Padaria","Bakery","Panadería"],
 ["Rotisseria e pratos prontos","Ready meals","Platos preparados"],["Grãos e cereais","Grains and cereals","Granos y cereales"],["Massas","Pasta","Pastas"],["Mercearia","Pantry","Despensa"],["Farinhas e confeitaria","Flour and baking","Harinas y repostería"],["Enlatados e conservas","Canned goods","Enlatados y conservas"],["Temperos e molhos","Spices and sauces","Especias y salsas"],
@@ -1607,6 +1621,17 @@ function renderAuth() {
     <button class="btn green block" type="submit">Criar conta</button>
     <p class="muted authalt">Já tem conta? <button type="button" class="link" data-act="authModo" data-id="login">Entrar</button></p>
   </form>`;
+  else if ((m === "verify" && !EMAIL_COM_CODIGO) || m === "linkSenha") { const senha = m === "linkSenha"; corpo = `<div class="box">
+    <div class="mailicon" aria-hidden="true">✉️</div>
+    <h1 class="authh">${senha ? "Abra o link no seu e-mail" : "Confirme seu e-mail"}</h1>
+    ${msg}
+    <p class="lead" style="margin-bottom:14px">Enviamos um e-mail para <b>${esc(authEmail)}</b>. ${senha ? "Toque no link da mensagem para criar uma senha nova. Ele abre o Gaspar já na tela da senha." : "Abra a mensagem e toque no link de confirmação."}</p>
+    ${senha ? "" : `<ol class="passos-mail"><li>Abra o e-mail do Gaspar (procure também em spam ou promoções).</li><li>Toque no link de confirmação. Se abrir neste aparelho, você já entra.</li><li>Se abriu em outro aparelho, volte aqui e toque em <b>Já confirmei</b>.</li></ol>`}
+    ${senha ? "" : `<button class="btn green block" type="button" data-act="jaConfirmei">Já confirmei, entrar</button>`}
+    <button type="button" class="btn ghost block" data-act="reenviar" style="margin-top:10px" id="btnReenviar">Reenviar e-mail</button>
+    ${typeof PREVIEW !== "undefined" ? `<p class="previewhint">Prévia: nenhum e-mail é enviado. Toque em Já confirmei.</p>` : ""}
+    <p class="muted authalt"><button type="button" class="link" data-act="authModo" data-id="${senha ? "forgot" : "signup"}">Usar outro e-mail</button> · <button type="button" class="link" data-act="authModo" data-id="login">Voltar para entrar</button></p>
+  </div>`; }
   else if (m === "verify" || m === "codigoSenha") { const senha = m === "codigoSenha"; corpo = `<form class="box" id="authForm" data-mode="${m}" novalidate>
     <div class="mailicon" aria-hidden="true">✉️</div>
     <h1 class="authh">${senha ? "Digite o código e a senha nova" : "Digite o código"}</h1>
@@ -1649,7 +1674,7 @@ function checaSenha() {
 function atualizaReenvio() {
   const b = $("#btnReenviar"); if (!b) return;
   const falta = Math.ceil((reenvioAte - Date.now()) / 1000);
-  b.disabled = falta > 0; b.textContent = falta > 0 ? `Reenviar código (${falta}s)` : "Reenviar código";
+  const rot = (authMode === "linkSenha" || (authMode === "verify" && !EMAIL_COM_CODIGO)) ? "Reenviar e-mail" : "Reenviar código"; b.disabled = falta > 0; b.textContent = traduzTexto(falta > 0 ? `${rot} (${falta}s)` : rot);
   if (falta > 0) setTimeout(atualizaReenvio, 1000);
 }
 document.addEventListener("input", e => {
@@ -1675,6 +1700,7 @@ async function onAuthSubmit(e) {
   if (modo === "login" && !password) { authMsg = { text: "Digite sua senha." }; return renderAuth(); }
   const btn = e.target.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Aguarde…";
   authMsg = null;
+  if (modo === "signup" || modo === "login") authSenha = password;
   if (modo === "signup") {
     const { data, error } = await sb.auth.signUp({ email, password, options: { emailRedirectTo: REDIRECT() } });
     if (error) authMsg = { text: traduz(error.message) };
@@ -1682,7 +1708,7 @@ async function onAuthSubmit(e) {
     else if (!data.session) { authMode = "verify"; reenvioAte = Date.now() + 60000; }
   } else if (modo === "login") {
     const { error } = await sb.auth.signInWithPassword({ email, password });
-    if (error) { if (/not confirmed/i.test(error.message)) { authMode = "verify"; authMsg = { text: "Seu e-mail ainda não foi confirmado. Digite o código que enviamos ou peça outro." }; } else authMsg = { text: traduz(error.message) }; }
+    if (error) { if (/not confirmed/i.test(error.message)) { authMode = "verify"; authMsg = { text: EMAIL_COM_CODIGO ? "Seu e-mail ainda não foi confirmado. Digite o código que enviamos ou peça outro." : "Seu e-mail ainda não foi confirmado. Toque no link que enviamos ou peça outro e-mail." }; } else authMsg = { text: traduz(error.message) }; }
   } else if (modo === "verify") {
     const token = lerCodigo();
     let r = await sb.auth.verifyOtp({ email: authEmail, token, type: "email" });
@@ -1703,7 +1729,7 @@ async function onAuthSubmit(e) {
   } else if (modo === "forgot") {
     const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: REDIRECT() });
     if (error && !/not found|no user/i.test(error.message)) authMsg = { text: traduz(error.message) };
-    else { authMode = "codigoSenha"; reenvioAte = Date.now() + 60000; authMsg = { ok: true, text: `Se ${email} tiver conta, o código já está a caminho.` }; }
+    else { authMode = EMAIL_COM_CODIGO ? "codigoSenha" : "linkSenha"; reenvioAte = Date.now() + 60000; authMsg = { ok: true, text: EMAIL_COM_CODIGO ? `Se ${email} tiver conta, o código já está a caminho.` : `Se ${email} tiver conta, o e-mail já está a caminho.` }; }
   } else if (modo === "nova") {
     const { error } = await sb.auth.updateUser({ password });
     if (error) authMsg = { text: traduz(error.message) };
@@ -2185,11 +2211,22 @@ function linhasLanc(list, tipo, { semIcone = false } = {}) {
     return `<li class="row${tipo === "saida_fixa" ? " fx" : ""}">${lead}<button class="grow" data-act="editLanc" data-id="${l.id}" style="border:0;background:none;text-align:left;padding:0"><div class="t" translate="no">${esc(l.descricao)}</div><div class="s">${sub}</div></button><div class="v num ${tipo === "entrada" ? cls : ""}">${money(l.valor)}</div><span class="ra"><button class="ib" data-act="editLanc" data-id="${l.id}" aria-label="Editar ${esc(l.descricao)}">${I.edit}</button><button class="ib" data-act="askDelLanc" data-id="${l.id}" aria-label="Apagar ${esc(l.descricao)}">${I.trash}</button></span>${tipo === "saida_fixa" ? mesesPagos(l) : ""}</li>`;
   }).join("")}</ul>`;
 }
+/* Apagar o lançamento de um mês de algo que se repete: marca o mês como "pulado"
+   na recorrência, senão o servidor recria o lançamento ao abrir o app de novo. */
+async function pularMesRecorrente(l) {
+  if (!l?.recorrencia_id) return;
+  const rec = S.recorrencias.find(r => r.id === l.recorrencia_id); if (!rec) return;
+  const comp = (l.competencia || monthStart(dParts(l.data))).slice(0, 10);
+  const pulos = [...new Set([...(rec.pulos || []), comp])];
+  rec.pulos = pulos;
+  await write({ t: "update", table: "recorrencias", id: rec.id, row: { pulos } });
+}
 async function askDelLanc(id) {
-  const l = S.lancamentos.find(x => x.id === id); if (!l) return;
+  const l = S.lancamentos.find(x => x.id === id) || (S.poupMov || []).find(x => x.id === id) || (S.histFixos || []).find(x => x.id === id); if (!l) return;
   const ok = await confirmPop({ title: l.tipo === "entrada" ? "Deseja realmente apagar esta entrada?" : l.tipo === "guardar" || l.tipo === "resgatar" ? "Deseja realmente apagar esta movimentação da poupança?" : "Deseja realmente apagar este gasto?", text: `<b>${esc(l.descricao)}</b>, ${dShort(l.data)}, <span class="num">${money(l.valor)}</span>, sai deste mês. Não dá para desfazer.${l.recorrencia_id ? " Os próximos meses continuam; para parar de repetir, use a lista Repetem todo mês." : ""}`, ok: "Sim, apagar" });
   if (!ok) return;
   S.lancamentos = S.lancamentos.filter(x => x.id !== id); S.histFixos = (S.histFixos || []).filter(x => x.id !== id); S.poupMov = (S.poupMov || []).filter(x => x.id !== id);
+  await pularMesRecorrente(l);
   await write({ t: "delete", table: "lancamentos", id }); saveCache(); render(); toast("Apagado");
 }
 function listaRec(tipo) {
@@ -2273,7 +2310,7 @@ function formLanc(l, preset = {}) {
   const ini = l || { descricao: "", valor: null, data: (() => { const t = todayISO(); return t >= monthStart(S.month) && t <= monthEnd(S.month) ? t : monthStart(S.month); })(), categoria_id: preset.categoria_id || null, pago: tipo !== "saida_fixa" };
   const canRepeat = !l && tipo !== "saida_variavel";
   const pc = catById(ini.categoria_id);
-  const exemplos = { "Farmácia": "Ex.: Remédio, Protetor solar", "iFood": "Ex.: Pizza, Japonês", "Fast food": "Ex.: McDonald's, Burger King", "Shopping": "Ex.: Tênis, Camiseta", "Combustível": "Ex.: Gasolina", "Uber": "Ex.: Uber, 99, táxi", "Transporte público": "Ex.: Ônibus, Metrô, Trem, recarga do bilhete" };
+  const exemplos = { "Farmácia": "Ex.: Remédio, Protetor solar", "Açougue": "Ex.: Picanha, Frango, Linguiça", "iFood": "Ex.: Pizza, Japonês", "Fast food": "Ex.: McDonald's, Burger King", "Shopping": "Ex.: Tênis, Camiseta", "Combustível": "Ex.: Gasolina", "Uber": "Ex.: Uber, 99, táxi", "Transporte público": "Ex.: Ônibus, Metrô, Trem, recarga do bilhete" };
   const title = l ? "Editar" : isIn ? "Nova entrada" : tipo === "saida_fixa" ? "Novo gasto fixo" : pc ? `Gasto em ${esc(pc.nome)}` : "Novo gasto variável";
   const ph = isIn ? "Ex.: Salário, Freela, Venda" : tipo === "saida_fixa" ? "Ex.: Aluguel, Condomínio, Luz" : (exemplos[pc?.nome] || "Ex.: Cinema, Presente, Conserto");
   sheet(`<form id="fLanc">${sheetHead(title)}
@@ -2337,7 +2374,7 @@ function formLanc(l, preset = {}) {
     saveCache(); closeSheet(); render(); toast("Salvo");
   };
   const del = $('#fLanc [data-act="delLanc"]');
-  if (del) del.onclick = async () => { if (!await confirmPop({ title: "Deseja realmente apagar?", text: `<b>${esc(l.descricao)}</b>, <span class="num">${money(l.valor)}</span>, sai deste mês.${l.recorrencia_id ? " Os próximos meses continuam; para parar de repetir, use a lista Repetem todo mês." : ""}`, ok: "Sim, apagar" })) return; S.lancamentos = S.lancamentos.filter(x => x.id !== l.id); await write({ t: "delete", table: "lancamentos", id: l.id }); saveCache(); closeSheet(); render(); };
+  if (del) del.onclick = async () => { if (!await confirmPop({ title: "Deseja realmente apagar?", text: `<b>${esc(l.descricao)}</b>, <span class="num">${money(l.valor)}</span>, sai deste mês.${l.recorrencia_id ? " Os próximos meses continuam; para parar de repetir, use a lista Repetem todo mês." : ""}`, ok: "Sim, apagar" })) return; S.lancamentos = S.lancamentos.filter(x => x.id !== l.id); S.histFixos = (S.histFixos || []).filter(x => x.id !== l.id); S.poupMov = (S.poupMov || []).filter(x => x.id !== l.id); await pularMesRecorrente(l); await write({ t: "delete", table: "lancamentos", id: l.id }); saveCache(); closeSheet(); render(); };
 }
 function formRec(r) {
   sheet(`<form id="fRec">${sheetHead("Repete todo mês")}
@@ -3147,7 +3184,7 @@ document.addEventListener("click", async e => {
   switch (a) {
     case "close": closeSheet(); break;
     case "authModo": authMode = id; authMsg = null; if ($("#em")) authEmail = $("#em").value.trim() || authEmail; renderAuth(); break;
-    case "reenviar": { const { error } = authMode === "codigoSenha" ? await sb.auth.resetPasswordForEmail(authEmail, { redirectTo: REDIRECT() }) : await sb.auth.resend({ type: "signup", email: authEmail, options: { emailRedirectTo: REDIRECT() } }); authMsg = error ? { text: traduz(error.message) } : { ok: true, text: `Código reenviado para ${authEmail}.` }; reenvioAte = Date.now() + 60000; renderAuth(); break; }
+    case "reenviar": { const { error } = (authMode === "codigoSenha" || authMode === "linkSenha") ? await sb.auth.resetPasswordForEmail(authEmail, { redirectTo: REDIRECT() }) : await sb.auth.resend({ type: "signup", email: authEmail, options: { emailRedirectTo: REDIRECT() } }); authMsg = error ? { text: traduz(error.message) } : { ok: true, text: `Código reenviado para ${authEmail}.` }; reenvioAte = Date.now() + 60000; renderAuth(); break; }
     case "alterarSenha": alterarSenha(); break;
     case "editNome": formNome(); break;
     case "mprev": S.month = new Date(S.month.getFullYear(), S.month.getMonth() - 1, 1); loadMonth(); break;
@@ -3218,6 +3255,14 @@ document.addEventListener("click", async e => {
     case "exportar": exportar(); break;
     case "apagarConta": formApagarConta(); break;
     case "suporte": abrirConta(false); abrirSuporte(); break;
+    case "jaConfirmei": {
+      if (!authSenha) { authMode = "login"; authMsg = { ok: true, text: "Entre com seu e-mail e senha." }; renderAuth(); break; }
+      b.disabled = true;
+      if (typeof PREVIEW !== "undefined") await sb.auth.__confirmar(authEmail);   // prévia: simula o clique no link
+      const { error } = await sb.auth.signInWithPassword({ email: authEmail, password: authSenha });
+      if (error) { b.disabled = false; authMsg = { text: /not confirmed/i.test(error.message) ? "Ainda não recebemos a confirmação. Toque no link do e-mail e tente de novo." : traduz(error.message) }; renderAuth(); }
+      else { S.boasVindas = true; authSenha = ""; authMode = "login"; authMsg = null; }
+      break; }
     case "assinar": assinar(b); break;
     case "gerenciarAssinatura": gerenciarAssinatura(b); break;
     case "supTema": formSuporte(Number(id)); break;
