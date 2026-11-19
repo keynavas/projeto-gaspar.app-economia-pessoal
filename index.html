@@ -1069,6 +1069,12 @@ main{padding-bottom:calc(176px + var(--safe-b))}
 .nflist .t{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .nflist .s{display:block;color:var(--ink-soft);font-size:13px}
 @media (max-width:420px){.nfmais{grid-template-columns:1fr}}
+.nfpassos{margin:0 0 16px;padding-left:22px;line-height:1.5;font-size:15px}
+.nfpassos li{margin-bottom:6px}
+.nfpassos a{color:var(--blue,#2563EB);font-weight:700}
+.nfbar{width:80%;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.nfbar i{display:block;height:100%;background:var(--ink);transition:width .3s}
+#nfTxt{width:100%;min-height:150px;font:inherit;font-size:14px;border-radius:14px;border:1.5px solid var(--line);padding:12px;background:var(--card,#fff);color:var(--ink);resize:vertical}
 .nfnovas{background:var(--paper-2);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.45;margin:10px 0 0}
 .nfgrupo{margin-top:14px}
 .nfgrupo h4{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:0;padding:6px 2px;font-size:15px;font-weight:700}
@@ -1350,7 +1356,8 @@ TRAD.push(
 ["Como você quer cadastrar este gasto?","How do you want to add this expense?","¿Cómo quieres registrar este gasto?"],["Cada produto da nota entra sozinho, já na aba certa.","Each product on the receipt goes in by itself, in the right tab.","Cada producto del ticket entra solo, en la pestaña correcta."],["Você digita o valor e a descrição.","You type the amount and description.","Escribes el monto y la descripción."],
 ["Loja","Store","Tienda"],["Nome da loja","Store name","Nombre de la tienda"],["nova aba","new tab","pestaña nueva"],["Nova categoria:","New category:","Nueva categoría:"],["Novas categorias:","New categories:","Nuevas categorías:"],[". Ela será criada ao salvar.",". It will be created when you save.",". Se creará al guardar."],[". Elas serão criadas ao salvar.",". They will be created when you save.",". Se crearán al guardar."],
 ["Salvar gasto","Save expense","Guardar gasto"],["Salvar {n} gastos","Save {n} expenses","Guardar {n} gastos"],["Salvando…","Saving…","Guardando…"],["{n} gastos salvos da nota","{n} expenses saved from the receipt","{n} gastos guardados del ticket"],["{n} gasto salvo da nota","{n} expense saved from the receipt","{n} gasto guardado del ticket"],["Sem categoria","No category","Sin categoría"],
-["O site da Fazenda do seu estado não deixa outros sistemas lerem a nota automaticamente. Abra a nota no site da Fazenda e cadastre os itens manualmente.","Your state's tax office site doesn't let other systems read the receipt automatically. Open the receipt on the tax office site and add the items manually.","El sitio de Hacienda de tu estado no permite que otros sistemas lean el ticket automáticamente. Abre el ticket en el sitio de Hacienda y registra los productos manualmente."],["Ver a nota no site da Fazenda","View the receipt on the tax office site","Ver el ticket en el sitio de Hacienda"],["Segure o celular a uns 25 cm da nota, com o QR Code dentro do quadrado. Toque na imagem para focar.","Hold the phone about 25 cm from the receipt, with the QR code inside the square. Tap the image to focus.","Sostén el celular a unos 25 cm del ticket, con el QR dentro del cuadro. Toca la imagen para enfocar."],["Tirar foto do QR Code","Take a photo of the QR code","Tomar foto del código QR"],["Se a imagem continuar borrada, tire uma foto: a câmera do celular foca melhor.","If the image stays blurry, take a photo: the phone camera focuses better.","Si la imagen sigue borrosa, toma una foto: la cámara del celular enfoca mejor."],["Procurando o QR Code na foto…","Looking for the QR code in the photo…","Buscando el QR en la foto…"],["Não achei o QR Code nessa foto.","Couldn't find the QR code in that photo.","No encontré el QR en esa foto."],["Ainda não achei. Afaste um pouco o celular ou tire uma foto.","Not found yet. Move the phone back a little or take a photo.","Aún no lo encuentro. Aleja un poco el celular o toma una foto."],["Trocar de câmera","Switch camera","Cambiar de cámara"],
+["O site da Fazenda do seu estado não deixa outros sistemas lerem a nota automaticamente. Abra a nota no seu navegador, tire print da lista de produtos e o Gaspar lê para você.","Your state's tax office site doesn't let other systems read the receipt automatically. Open the receipt on the tax office site and add the items manually.","El sitio de Hacienda de tu estado no permite que otros sistemas lean el ticket automáticamente. Abre el ticket en el sitio de Hacienda y registra los productos manualmente."],["Ver a nota no site da Fazenda","View the receipt on the tax office site","Ver el ticket en el sitio de Hacienda"],["Segure o celular a uns 25 cm da nota, com o QR Code dentro do quadrado. Toque na imagem para focar.","Hold the phone about 25 cm from the receipt, with the QR code inside the square. Tap the image to focus.","Sostén el celular a unos 25 cm del ticket, con el QR dentro del cuadro. Toca la imagen para enfocar."],["Tirar foto do QR Code","Take a photo of the QR code","Tomar foto del código QR"],["Se a imagem continuar borrada, tire uma foto: a câmera do celular foca melhor.","If the image stays blurry, take a photo: the phone camera focuses better.","Si la imagen sigue borrosa, toma una foto: la cámara del celular enfoca mejor."],["Procurando o QR Code na foto…","Looking for the QR code in the photo…","Buscando el QR en la foto…"],["Não achei o QR Code nessa foto.","Couldn't find the QR code in that photo.","No encontré el QR en esa foto."],["Ainda não achei. Afaste um pouco o celular ou tire uma foto.","Not found yet. Move the phone back a little or take a photo.","Aún no lo encuentro. Aleja un poco el celular o toma una foto."],["Trocar de câmera","Switch camera","Cambiar de cámara"],
+["Ler print da nota","Read a receipt screenshot","Leer captura del ticket"],["Para quando o site da Fazenda bloqueia: você tira print da nota e o Gaspar lê.","For when the tax office site blocks it: you screenshot the receipt and Gaspar reads it.","Para cuando el sitio de Hacienda bloquea: haces captura del ticket y Gaspar la lee."],["Ler a nota pelos prints","Read the receipt from screenshots","Leer el ticket desde capturas"],["Abra a nota no site da Fazenda","Open the receipt on the tax office site","Abre el ticket en el sitio de Hacienda"],["Abra a nota no site da Fazenda (leia o QR Code com a câmera do celular)","Open the receipt on the tax office site (scan the QR code with the phone camera)","Abre el ticket en el sitio de Hacienda (lee el QR con la cámara del celular)"],["Tire print da lista de produtos. Se ela for comprida, role a página e tire mais prints.","Screenshot the product list. If it's long, scroll and take more screenshots.","Haz captura de la lista de productos. Si es larga, desplázate y toma más capturas."],["Volte aqui e escolha os prints. O Gaspar lê os textos e números sozinho.","Come back and pick the screenshots. Gaspar reads the text and numbers by itself.","Vuelve aquí y elige las capturas. Gaspar lee los textos y números solo."],["Escolher prints da nota","Choose receipt screenshots","Elegir capturas del ticket"],["Colar o texto da página","Paste the page text","Pegar el texto de la página"],["Lendo os prints","Reading screenshots","Leyendo capturas"],["Preparando o leitor de texto…","Preparing the text reader…","Preparando el lector de texto…"],["Lendo o print {n} de {n}…","Reading screenshot {n} of {n}…","Leyendo captura {n} de {n}…"],["Lendo o print…","Reading screenshot…","Leyendo captura…"],["Não foi possível baixar o leitor de texto. Confira a internet ou cole o texto da página.","Couldn't download the text reader. Check your internet or paste the page text.","No se pudo descargar el lector de texto. Revisa internet o pega el texto de la página."],["Não encontrei produtos nesses prints. Confira se aparecem as linhas com o nome do produto, “Código”, quantidade e valor.","No products found in these screenshots. Check that the lines with product name, “Código”, quantity and price are visible.","No encontré productos en esas capturas. Verifica que se vean las líneas con nombre, “Código”, cantidad y valor."],["Colar o texto da nota","Paste the receipt text","Pegar el texto del ticket"],["No site da Fazenda, toque e segure no texto, escolha “Selecionar tudo” e depois “Copiar”. Cole aqui.","On the tax office site, press and hold the text, choose “Select all” then “Copy”. Paste here.","En el sitio de Hacienda, mantén presionado el texto, elige “Seleccionar todo” y luego “Copiar”. Pégalo aquí."],["Texto da página","Page text","Texto de la página"],["Ler texto","Read text","Leer texto"],["O site da Fazenda do seu estado não deixa outros sistemas lerem a nota automaticamente. Abra a nota no seu navegador, tire print da lista de produtos e o Gaspar lê para você.","Your state's tax office site doesn't let other systems read the receipt automatically. Open it in your browser, screenshot the product list and Gaspar reads it for you.","El sitio de Hacienda de tu estado no permite leer el ticket automáticamente. Ábrelo en tu navegador, haz captura de la lista y Gaspar la lee por ti."],
 // ---------- mercado ----------
 ["+ Nova ida ao mercado","+ New grocery trip","+ Nueva compra"],["Nova ida ao mercado","New grocery trip","Nueva compra en el súper"],["Nenhuma ida ao mercado neste mês.","No grocery trips this month.","Ninguna compra este mes."],["Toque em Nova ida ao mercado quando chegar ao caixa ou já durante as compras.","Tap New grocery trip at the checkout or while you shop.","Toca Nueva compra al llegar a la caja o mientras compras."],
 ["Mercado por categoria","Groceries by category","Supermercado por categoría"],["{n} itens","{n} items","{n} productos"],["{n} item","{n} item","{n} producto"],["Compra","Purchase","Compra"],["Começar compra","Start trip","Empezar compra"],["Nome do mercado","Store name","Nombre del súper"],["Ex.: Atacadão, Pão de Açúcar","E.g.: Walmart, Costco","Ej.: Mercadona, Carrefour"],
@@ -2101,6 +2108,7 @@ function escolherCompra(ctx = { tipo: "mercado" }) {
   sheet(`<div class="nfwrap">${sheetHead(titulo)}
     <p class="muted" style="margin:-6px 0 16px">${ctx.tipo === "mercado" ? "Como você quer cadastrar esta compra?" : "Como você quer cadastrar este gasto?"}</p>
     <button type="button" class="nfopt" data-act="nfQR"><span class="nfi">${I.qr}</span><span class="grow"><b>Escanear QR Code da nota</b><span>${ctx.tipo === "mercado" ? "Os produtos, os preços, o mercado e a data entram sozinhos." : "Cada produto da nota entra sozinho, já na aba certa."}</span></span><span class="chev" aria-hidden="true">›</span></button>
+    <button type="button" class="nfopt" data-act="nfPrints"><span class="nfi">${I.camera}</span><span class="grow"><b>Ler print da nota</b><span>Para quando o site da Fazenda bloqueia: você tira print da nota e o Gaspar lê.</span></span><span class="chev" aria-hidden="true">›</span></button>
     <button type="button" class="nfopt" data-act="nfManual"><span class="nfi">${I.edit}</span><span class="grow"><b>Cadastrar manualmente</b><span>${ctx.tipo === "mercado" ? "Você digita os itens enquanto compra ou no caixa." : "Você digita o valor e a descrição."}</span></span><span class="chev" aria-hidden="true">›</span></button>
   </div>`);
 }
@@ -2167,7 +2175,7 @@ async function lerQR(deviceId) {
     <p class="muted nfdica" style="margin-top:8px">Se a imagem continuar borrada, tire uma foto: a câmera do celular foca melhor.</p>
     <div class="nfmais">
       <button type="button" class="btn ghost" data-act="nfColar">Colar link da nota</button>
-      <button type="button" class="btn ghost" data-act="nfManual">Cadastrar manualmente</button>
+      <button type="button" class="btn ghost" data-act="nfPrints">Ler print da nota</button>
     </div>
   </div>`);
   $("#sheet").addEventListener("close", pararCamera, { once: true });
@@ -2344,6 +2352,135 @@ function catPalpite(produto, tipo = "mercado", padrao = null) {
   return { id: padrao };
 }
 
+// ---- lê o texto da página da nota (print lido por OCR ou texto copiado) ----
+const UNIDADES = "UNID|UND|UNI|PCT|EMB|KIT|PAR|CX|KG|UN|PC|LT|ML|GR|DZ|FD|BD|MT|FR|SC|BJ|GF|LA|TB|RL|CJ|G|L|M";
+const DINHEIRO = /\d{1,3}(?:\.\d{3})*,\d{2}|\d+,\d{2}/g;
+const numBR = v => { if (v == null) return null; const s = String(v).replace(/\s/g, ""); const n = Number(s.includes(",") ? s.replace(/\./g, "").replace(",", ".") : s); return Number.isFinite(n) ? n : null; };
+function limparTextoNota(t) {
+  return String(t || "").replace(/\r/g, "").replace(/\t/g, " ")
+    .replace(/\(\s*C\S{0,2}d\S{0,2}go/gi, "(Código").replace(/C[oóé0]d[i1l]go/gi, "Código")
+    .replace(/Qt[dc]e?\s*[.,]?\s*[:;]/gi, "Qtde.:").replace(/V[l1I]\s*[.,]\s*Un[il1]t\s*[.,]?\s*[:;]?/gi, "Vl. Unit.:").replace(/V[l1I]\s*[.,]\s*T[o0]ta[l1]/gi, "Vl. Total")
+    .replace(/(\d)\s*,\s*(\d{2})(?!\d)/g, "$1,$2").replace(/[  ]+/g, " ");
+}
+function lerTextoNota(bruto) {
+  const t = limparTextoNota(bruto);
+  const cods = [...t.matchAll(/\(Código\s*[:;]?\s*([^)\n]*)\)?/gi)];
+  const fim = (() => { const m = t.search(/Qtd\.? total de itens|Valor total R\$|Valor a pagar/i); return m < 0 ? t.length : m; })();
+  const ruim = /Vl\. Total|Vl\. Unit|Qtde|CNPJ|Valor|Emiss|Consulta|Nota Fiscal|Documento Auxiliar|^\s*[\d.,\s]+\s*$/i;
+  const itens = [];
+  let antes = 0;
+  cods.forEach((m, k) => {
+    const ini = m.index, fimBloco = k + 1 < cods.length ? cods[k + 1].index : fim;
+    // nome: última(s) linha(s) antes do "(Código"
+    const trecho = t.slice(antes, ini).split("\n").map(s => s.trim());
+    let linhas = trecho.filter(Boolean);
+    let nome = linhas.pop() || "";
+    nome = nome.replace(/^.*?Vl\. Total\s*[\d.,]*\s*/i, "").replace(/^[\d.,]+\s+(?=[A-Za-zÀ-ú])/, "").trim();
+    if (nome.length < 12 && linhas.length && !ruim.test(linhas[linhas.length - 1])) nome = linhas.pop() + " " + nome;
+    const bloco = t.slice(ini + m[0].length, fimBloco);
+    const blocoNum = bloco.slice(0, (() => { let c = -1; for (const v of bloco.matchAll(DINHEIRO)) c = v.index + v[0].length; return c < 0 ? bloco.length : c; })());
+    const qtd = numBR(blocoNum.match(/Qtde\.:\s*([\d.,]+)/i)?.[1]);
+    const un = (blocoNum.match(new RegExp(`UN\\s*[:;]\\s*(${UNIDADES})`, "")) || blocoNum.match(new RegExp(`UN\\s*[:;]\\s*(${UNIDADES})`, "i")))?.[1]?.toUpperCase() || "UN";
+    const unit = numBR(blocoNum.match(/Vl\. Unit\.:\s*([\d.]*\d,\d{2})/i)?.[1]);
+    const depoisTotal = blocoNum.split(/Vl\. Total/i)[1];
+    let total = depoisTotal ? numBR((depoisTotal.match(DINHEIRO) || [])[0]) : null;
+    const esperado = qtd && unit != null ? Math.round(qtd * unit * 100) / 100 : null;
+    if (esperado != null && (total == null || Math.abs(total - esperado) > Math.max(0.05, esperado * 0.02))) {
+      const cands = (blocoNum.match(DINHEIRO) || []).map(numBR);
+      const perto = cands.sort((a, b) => Math.abs(a - esperado) - Math.abs(b - esperado))[0];
+      total = perto != null && Math.abs(perto - esperado) <= Math.max(0.05, esperado * 0.02) ? perto : esperado;
+    }
+    if (total == null) { const c = (blocoNum.match(DINHEIRO) || []).map(numBR); total = c.length ? c[c.length - 1] : null; }
+    if (nome && total != null) itens.push({ produto: nome.replace(/\s+/g, " ").trim(), codigo: (m[1] || "").replace(/\s/g, ""), quantidade: qtd, unidade: un, preco_unitario: unit, total });
+    // o nome do próximo item começa na linha depois do último valor em reais deste bloco
+    let corte = -1; for (const v of bloco.matchAll(DINHEIRO)) corte = v.index + v[0].length;
+    if (corte >= 0) { const nl = bloco.indexOf("\n", corte); corte = nl < 0 ? bloco.length : nl; } else corte = bloco.length - (bloco.split("\n").pop() || "").length;
+    antes = ini + m[0].length + corte;
+  });
+  const linhas = t.split("\n").map(s => s.trim()).filter(Boolean);
+  const iC = linhas.findIndex(l => /CNPJ/i.test(l));
+  let mercado = iC > 0 ? linhas[iC - 1] : null;
+  if (mercado && /Nota Fiscal|Consulta|Documento|Secretaria|Fazenda/i.test(mercado)) mercado = null;
+  const d = t.match(/Emiss\S{0,3}o\s*[:;]?\s*(\d{2})\/(\d{2})\/(\d{4})/i) || t.match(/(\d{2})\/(\d{2})\/(\d{4})\s+\d{2}:\d{2}/);
+  const chave = (t.replace(/(\d{4})\s(?=\d{4})/g, "$1").match(/\b\d{44}\b/) || [])[0] || null;
+  const desconto = numBR(t.match(/Descontos?\s*R\$\s*[:;]?\s*([\d.,]+)/i)?.[1]) || 0;
+  const pagar = numBR(t.match(/Valor a pagar\s*R\$\s*[:;]?\s*([\d.,]+)/i)?.[1]);
+  return { mercado, data: d ? `${d[3]}-${d[2]}-${d[1]}` : null, chave, desconto, total: pagar, itens };
+}
+// junta vários prints: tira os itens repetidos onde um print encosta no outro
+function juntarNotas(notas) {
+  const out = { mercado: null, data: null, chave: null, desconto: 0, total: null, itens: [] };
+  for (const n of notas) {
+    out.mercado ||= n.mercado; out.data ||= n.data; out.chave ||= n.chave; out.desconto ||= n.desconto; out.total ??= n.total;
+    let pula = 0;
+    const igual = (a, b) => a && b && a.codigo === b.codigo && a.total === b.total && a.quantidade === b.quantidade;
+    for (let k = Math.min(n.itens.length, out.itens.length); k > 0; k--) {
+      if (n.itens.slice(0, k).every((it, i) => igual(it, out.itens[out.itens.length - k + i]))) { pula = k; break; }
+    }
+    out.itens.push(...n.itens.slice(pula));
+  }
+  return out;
+}
+
+// ---- prints ou texto da página da Fazenda (quando o site bloqueia a leitura automática) ----
+let tesseractCarregando = null;
+function carregarTesseract() {
+  if (window.Tesseract) return Promise.resolve(window.Tesseract);
+  return tesseractCarregando ||= new Promise((ok, erro) => { const s = document.createElement("script"); s.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"; s.onload = () => ok(window.Tesseract); s.onerror = () => { tesseractCarregando = null; erro(new Error("ocr")); }; document.head.appendChild(s); });
+}
+function lerPrints(url) {
+  pararCamera();
+  const seguro = url && /^https?:\/\/[^/]+\.gov\.br\//i.test(url);
+  sheet(`<div class="nfwrap">${sheetHead("Ler a nota pelos prints")}
+    <ol class="nfpassos">
+      <li>${seguro ? `<a href="${esc(url)}" target="_blank" rel="noopener">Abra a nota no site da Fazenda</a>` : "Abra a nota no site da Fazenda (leia o QR Code com a câmera do celular)"}.</li>
+      <li>Tire print da lista de produtos. Se ela for comprida, role a página e tire mais prints.</li>
+      <li>Volte aqui e escolha os prints. O Gaspar lê os textos e números sozinho.</li>
+    </ol>
+    <label class="btn green block nffoto">${I.camera || ""}Escolher prints da nota<input id="nfPrints" type="file" accept="image/*" multiple hidden></label>
+    <div class="nfmais" style="margin-top:10px">
+      <button type="button" class="btn ghost" data-act="nfTexto">Colar o texto da página</button>
+      <button type="button" class="btn ghost" data-act="nfManual">Cadastrar manualmente</button>
+    </div>
+  </div>`);
+  $("#nfPrints").onchange = e => { const fs = [...(e.target.files || [])]; if (fs.length) lerImagensNota(fs, url); };
+}
+async function lerImagensNota(arquivos, url) {
+  const passo = (t, pct) => sheet(`<div class="nfwrap">${sheetHead("Lendo os prints")}<div class="nfload"><span class="spin" aria-hidden="true"></span><p role="status">${esc(traduzTexto(t))}</p>${pct != null ? `<div class="nfbar"><i style="width:${pct}%"></i></div>` : ""}</div></div>`);
+  passo("Preparando o leitor de texto…");
+  let T, worker;
+  try { T = await carregarTesseract(); } catch { return nfErro("Não foi possível baixar o leitor de texto. Confira a internet ou cole o texto da página.", url, true); }
+  const textos = [];
+  try {
+    let atual = 0;
+    worker = await T.createWorker("por", 1, { logger: m => { if (m.status === "recognizing text") { const pct = Math.round(((atual + (m.progress || 0)) / arquivos.length) * 100); const el = $(".nfbar i"); if (el) el.style.width = pct + "%"; } } });
+    for (; atual < arquivos.length; atual++) {
+      passo(arquivos.length > 1 ? `Lendo o print ${atual + 1} de ${arquivos.length}…` : "Lendo o print…", Math.round(atual / arquivos.length * 100));
+      let img = arquivos[atual];
+      try { const bm = await createImageBitmap(img); if (bm.width > 1600) { const k = 1600 / bm.width, cv = document.createElement("canvas"); cv.width = 1600; cv.height = Math.round(bm.height * k); cv.getContext("2d").drawImage(bm, 0, 0, cv.width, cv.height); img = cv; } bm.close?.(); } catch {}
+      const { data } = await worker.recognize(img);
+      textos.push(data.text || "");
+    }
+  } catch (e) { console.error(e); } finally { try { await worker?.terminate(); } catch {} }
+  usarTextoNota(textos, url);
+}
+function usarTextoNota(textos, url) {
+  const nota = juntarNotas(textos.map(lerTextoNota));
+  if (!nota.itens.length) return nfErro("Não encontrei produtos nesses prints. Confira se aparecem as linhas com o nome do produto, “Código”, quantidade e valor.", url, true);
+  if (!nota.mercado && S.nfPreset?.loja) nota.mercado = S.nfPreset.loja;
+  if (!nota.total) nota.total = null;
+  revisarNota(nota);
+}
+function colarTextoNota(url) {
+  sheet(`<form id="fTexto" class="nfwrap">${sheetHead("Colar o texto da nota")}
+    <p class="muted" style="margin:-6px 0 12px;font-size:14px">No site da Fazenda, toque e segure no texto, escolha “Selecionar tudo” e depois “Copiar”. Cole aqui.</p>
+    <div class="field"><label for="nfTxt">Texto da página</label><textarea id="nfTxt" rows="8" required placeholder="ARROZ TIPO 1 5KG (Código: 789…) Qtde.:1 UN: UN Vl. Unit.: 27,90 …"></textarea></div>
+    <div class="actions"><button type="button" class="btn ghost" data-act="nfPrints">Voltar</button><button class="btn green">Ler texto</button></div>
+  </form>`);
+  $("#fTexto").onsubmit = e => { e.preventDefault(); usarTextoNota([$("#nfTxt").value], url); };
+  setTimeout(() => $("#nfTxt")?.focus(), 60);
+}
+
 async function processarNota(url) {
   pararCamera();
   if (!navigator.onLine) return nfErro("Sem internet agora. Para ler a nota o Gaspar precisa consultar o site da Fazenda.", url);
@@ -2354,6 +2491,7 @@ async function processarNota(url) {
   if (error || !data || data.erro) {
     let msg = data?.erro, bloq = !!data?.bloqueado;
     if (!msg && error?.context?.json) { try { const j = await error.context.json(); msg = j.erro; bloq = !!j.bloqueado; } catch {} }
+    if (bloq) msg = "O site da Fazenda do seu estado não deixa outros sistemas lerem a nota automaticamente. Abra a nota no seu navegador, tire print da lista de produtos e o Gaspar lê para você.";
     return nfErro(msg || "Não foi possível ler a nota agora. Tente de novo em alguns minutos.", url, bloq);
   }
   revisarNota(data);
@@ -2366,8 +2504,8 @@ function nfErro(msg, url, bloqueado = false) {
   const seguro = url && /^https?:\/\/[^/]+\.gov\.br\//i.test(url);
   sheet(`<div class="nfwrap">${sheetHead("Não deu para ler a nota")}
     <div class="nferro"><p>${esc(msg)}</p></div>
-    ${bloqueado && seguro ? `<a class="btn ghost block nfver" href="${esc(url)}" target="_blank" rel="noopener">Ver a nota no site da Fazenda</a>` : ""}
-    <div class="actions">${bloqueado ? "" : url ? `<button type="button" class="btn ghost" data-act="nfTentar">Tentar de novo</button>` : `<button type="button" class="btn ghost" data-act="nfQR">Escanear de novo</button>`}<button type="button" class="btn green" data-act="nfManual">Cadastrar manualmente</button></div>
+    ${bloqueado ? `<button type="button" class="btn green block nfver" data-act="nfPrints">Ler a nota pelos prints</button>` : ""}
+    <div class="actions">${bloqueado ? "" : url ? `<button type="button" class="btn ghost" data-act="nfTentar">Tentar de novo</button>` : `<button type="button" class="btn ghost" data-act="nfQR">Escanear de novo</button>`}<button type="button" class="btn ${bloqueado ? "ghost" : "green"}" data-act="nfManual">Cadastrar manualmente</button></div>
   </div>`);
   if (S.nfPreset?.cnpj && navigator.onLine) fetch(`https://brasilapi.com.br/api/cnpj/v1/${S.nfPreset.cnpj}`).then(r => r.ok ? r.json() : null).then(j => { if (j && S.nfPreset) S.nfPreset.loja = mercadoBonito(j.nome_fantasia || j.razao_social || ""); }).catch(() => {});
 }
@@ -3644,6 +3782,8 @@ document.addEventListener("click", async e => {
     case "nfQR": lerQR(); break;
     case "nfManual": nfManual(); break;
     case "nfColar": colarLink(); break;
+    case "nfPrints": lerPrints(S.nfUltimaUrl); break;
+    case "nfTexto": colarTextoNota(S.nfUltimaUrl); break;
     case "nfTentar": if (S.nfUltimaUrl) processarNota(S.nfUltimaUrl); else lerQR(); break;
     case "nfAbrir": { closeSheet(); const dt = b.dataset.data, d = dParts(dt); if (dt < monthStart(S.month) || dt > monthEnd(S.month)) { S.month = new Date(d.getFullYear(), d.getMonth(), 1); await loadMonth(); } location.hash = `#/mercado/${id}`; break; }
     case "editCompra": formCompra(S.compras.find(c => c.id === route()[1])); break;
