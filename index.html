@@ -1344,7 +1344,7 @@ TRAD.push(
 ["E-mail","Email","Correo"],["Senha","Password","Contraseña"],["Entrar","Sign in","Entrar"],["Esqueci minha senha","Forgot my password","Olvidé mi contraseña"],["Ainda não tem conta?","Don't have an account yet?","¿Aún no tienes cuenta?"],["Criar conta","Create account","Crear cuenta"],["Já tem conta?","Already have an account?","¿Ya tienes cuenta?"],
 ["Mostrar","Show","Mostrar"],["Ocultar","Hide","Ocultar"],["Ocultar senha","Hide password","Ocultar contraseña"],["Aguarde…","Please wait…","Espera…"],
 ["Prévia: entre com","Preview: sign in with","Vista previa: entra con"],["e qualquer senha.","and any password.","y cualquier contraseña."],["Prévia: nenhum e-mail é enviado. Use o código","Preview: no email is sent. Use the code","Vista previa: no se envía ningún correo. Usa el código"],
-["Crie sua conta. Vamos enviar um código para confirmar seu e-mail.","Create your account. We'll send a code to confirm your email.","Crea tu cuenta. Te enviaremos un código para confirmar tu correo."],["Confirme a senha","Confirm password","Confirma la contraseña"],
+["Crie sua conta com e-mail e senha. Leva menos de um minuto.","Create your account with email and password. It takes less than a minute.","Crea tu cuenta con correo y contraseña. Toma menos de un minuto."],["Crie sua conta. Vamos enviar um código para confirmar seu e-mail.","Create your account. We'll send a code to confirm your email.","Crea tu cuenta. Te enviaremos un código para confirmar tu correo."],["Confirme a senha","Confirm password","Confirma la contraseña"],
 ["8 caracteres ou mais","8 or more characters","8 caracteres o más"],["• 8 caracteres ou mais","• 8 or more characters","• 8 caracteres o más"],["✓ 8 caracteres ou mais","✓ 8 or more characters","✓ 8 caracteres o más"],
 ["Pelo menos uma letra","At least one letter","Al menos una letra"],["• Pelo menos uma letra","• At least one letter","• Al menos una letra"],["✓ Pelo menos uma letra","✓ At least one letter","✓ Al menos una letra"],
 ["Pelo menos um número","At least one number","Al menos un número"],["• Pelo menos um número","• At least one number","• Al menos un número"],["✓ Pelo menos um número","✓ At least one number","✓ Al menos un número"],
@@ -1611,7 +1611,7 @@ function renderAuth() {
   </form>`;
   else if (m === "signup") corpo = `<form class="box" id="authForm" data-mode="signup" novalidate>
     <div class="logo">Gaspar</div>
-    <p class="lead">Crie sua conta. Vamos enviar um código para confirmar seu e-mail.</p>
+    <p class="lead">${EMAIL_COM_CODIGO ? "Crie sua conta. Vamos enviar um código para confirmar seu e-mail." : "Crie sua conta com e-mail e senha. Leva menos de um minuto."}</p>
     ${msg}
     <div class="field"><label for="em">E-mail</label><input id="em" type="email" autocomplete="email" value="${esc(authEmail)}" required></div>
     ${campoSenha("pw", "Senha", "new-password")}
@@ -1706,6 +1706,7 @@ async function onAuthSubmit(e) {
     if (error) authMsg = { text: traduz(error.message) };
     else if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) authMsg = { text: "Esse e-mail já tem conta. Entre com sua senha ou use Esqueci minha senha." };
     else if (!data.session) { authMode = "verify"; reenvioAte = Date.now() + 60000; }
+    else { S.boasVindas = true; authSenha = ""; }   // confirmação de e-mail desligada no Supabase: já entra
   } else if (modo === "login") {
     const { error } = await sb.auth.signInWithPassword({ email, password });
     if (error) { if (/not confirmed/i.test(error.message)) { authMode = "verify"; authMsg = { text: EMAIL_COM_CODIGO ? "Seu e-mail ainda não foi confirmado. Digite o código que enviamos ou peça outro." : "Seu e-mail ainda não foi confirmado. Toque no link que enviamos ou peça outro e-mail." }; } else authMsg = { text: traduz(error.message) }; }
