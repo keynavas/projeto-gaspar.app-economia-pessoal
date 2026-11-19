@@ -1048,6 +1048,7 @@ main{padding-bottom:calc(176px + var(--safe-b))}
 @media (prefers-reduced-motion:reduce){.spin{animation-duration:2.4s}}
 .nferro{background:var(--paper-2);border-radius:16px;padding:16px;margin:0 0 18px;line-height:1.5}
 .nferro p{margin:0}
+.nfver{display:flex;justify-content:center;margin:0 0 12px;text-decoration:none}
 .nfaviso{background:#FFF4D6;color:#5A4300;border-radius:14px;padding:12px 14px;margin:0 0 16px;font-size:14px;line-height:1.5}
 .nfaviso .link{color:inherit;font-weight:700;padding:0;margin-top:4px}
 .nfsum{display:flex;justify-content:space-between;align-items:baseline;padding:4px 2px 8px;border-bottom:1.5px solid var(--line);font-weight:600}
@@ -1325,7 +1326,7 @@ TRAD.push(
 ["Atenção: os gastos variáveis passaram do limite de {x}","Heads up: variable expenses went over the {x} limit","Atención: los gastos variables superaron el límite de {x}"],["Atenção: os gastos variáveis passaram {m} do limite de {x}","Heads up: variable expenses went {m} over the {x} limit","Atención: los gastos variables superaron en {m} el límite de {x}"],
 // ---------- nota fiscal (QR) ----------
 ["Como você quer cadastrar esta compra?","How do you want to add this purchase?","¿Cómo quieres registrar esta compra?"],["Escanear QR Code da nota","Scan the receipt QR code","Escanear el QR del ticket"],["Os produtos, os preços, o mercado e a data entram sozinhos.","Products, prices, store and date are filled in for you.","Los productos, precios, el súper y la fecha se completan solos."],["Cadastrar manualmente","Add manually","Registrar manualmente"],["Você digita os itens enquanto compra ou no caixa.","You type the items while shopping or at checkout.","Escribes los productos mientras compras o en la caja."],
-["Escanear nota","Scan receipt","Escanear ticket"],["Abrindo a câmera…","Opening the camera…","Abriendo la cámara…"],["Aponte para o QR Code no rodapé da nota. Ele lê sozinho.","Point at the QR code at the bottom of the receipt. It reads automatically.","Apunta al QR al pie del ticket. Se lee solo."],["Usar foto da nota","Use a photo","Usar una foto"],["Colar link da nota","Paste receipt link","Pegar enlace del ticket"],["Procurando o QR Code…","Looking for the QR code…","Buscando el código QR…"],
+["Escanear nota","Scan receipt","Escanear ticket"],["Abrindo a câmera…","Opening the camera…","Abriendo la cámara…"],["Deixe o QR Code do rodapé da nota dentro do quadrado, a um palmo da câmera. Ele lê sozinho.","Keep the QR code at the bottom of the receipt inside the square, a hand's width from the camera. It reads automatically.","Deja el QR del pie del ticket dentro del cuadro, a un palmo de la cámara. Se lee solo."],["Usar foto da nota","Use a photo","Usar una foto"],["Colar link da nota","Paste receipt link","Pegar enlace del ticket"],["Procurando o QR Code…","Looking for the QR code…","Buscando el código QR…"],
 ["Não foi possível carregar o leitor. Use a foto ou cole o link.","Couldn't load the reader. Use a photo or paste the link.","No se pudo cargar el lector. Usa una foto o pega el enlace."],["Leitor indisponível. Cole o link da nota.","Reader unavailable. Paste the receipt link.","Lector no disponible. Pega el enlace del ticket."],["Não deu para abrir essa foto.","Couldn't open that photo.","No se pudo abrir esa foto."],["Não achei o QR Code nessa foto. Tire de mais perto, com boa luz.","No QR code found in that photo. Take it closer, with good light.","No encontré el QR en esa foto. Tómala más cerca y con buena luz."],
 ["Câmera indisponível aqui. Use a foto ou cole o link.","Camera unavailable here. Use a photo or paste the link.","Cámara no disponible aquí. Usa una foto o pega el enlace."],["Permita o uso da câmera para ler a nota, ou use a foto.","Allow camera access to read the receipt, or use a photo.","Permite usar la cámara para leer el ticket, o usa una foto."],["Não foi possível abrir a câmera. Use a foto ou cole o link.","Couldn't open the camera. Use a photo or paste the link.","No se pudo abrir la cámara. Usa una foto o pega el enlace."],
 ["Link do QR Code","QR code link","Enlace del código QR"],["Leia o QR com a câmera do celular, copie o link que aparece e cole aqui.","Scan the QR with your phone camera, copy the link it shows and paste it here.","Lee el QR con la cámara del celular, copia el enlace y pégalo aquí."],["Ler nota","Read receipt","Leer ticket"],
@@ -1340,7 +1341,7 @@ TRAD.push(
 ["Como você quer cadastrar este gasto?","How do you want to add this expense?","¿Cómo quieres registrar este gasto?"],["Cada produto da nota entra sozinho, já na aba certa.","Each product on the receipt goes in by itself, in the right tab.","Cada producto del ticket entra solo, en la pestaña correcta."],["Você digita o valor e a descrição.","You type the amount and description.","Escribes el monto y la descripción."],
 ["Loja","Store","Tienda"],["Nome da loja","Store name","Nombre de la tienda"],["nova aba","new tab","pestaña nueva"],["Nova categoria:","New category:","Nueva categoría:"],["Novas categorias:","New categories:","Nuevas categorías:"],[". Ela será criada ao salvar.",". It will be created when you save.",". Se creará al guardar."],[". Elas serão criadas ao salvar.",". They will be created when you save.",". Se crearán al guardar."],
 ["Salvar gasto","Save expense","Guardar gasto"],["Salvar {n} gastos","Save {n} expenses","Guardar {n} gastos"],["Salvando…","Saving…","Guardando…"],["{n} gastos salvos da nota","{n} expenses saved from the receipt","{n} gastos guardados del ticket"],["{n} gasto salvo da nota","{n} expense saved from the receipt","{n} gasto guardado del ticket"],["Sem categoria","No category","Sin categoría"],
-// ---------- mercado ----------
+["O site da Fazenda do seu estado não deixa outros sistemas lerem a nota automaticamente. Abra a nota no site da Fazenda e cadastre os itens manualmente.","Your state's tax office site doesn't let other systems read the receipt automatically. Open the receipt on the tax office site and add the items manually.","El sitio de Hacienda de tu estado no permite que otros sistemas lean el ticket automáticamente. Abre el ticket en el sitio de Hacienda y registra los productos manualmente."],["Ver a nota no site da Fazenda","View the receipt on the tax office site","Ver el ticket en el sitio de Hacienda"],// ---------- mercado ----------
 ["+ Nova ida ao mercado","+ New grocery trip","+ Nueva compra"],["Nova ida ao mercado","New grocery trip","Nueva compra en el súper"],["Nenhuma ida ao mercado neste mês.","No grocery trips this month.","Ninguna compra este mes."],["Toque em Nova ida ao mercado quando chegar ao caixa ou já durante as compras.","Tap New grocery trip at the checkout or while you shop.","Toca Nueva compra al llegar a la caja o mientras compras."],
 ["Mercado por categoria","Groceries by category","Supermercado por categoría"],["{n} itens","{n} items","{n} productos"],["{n} item","{n} item","{n} producto"],["Compra","Purchase","Compra"],["Começar compra","Start trip","Empezar compra"],["Nome do mercado","Store name","Nombre del súper"],["Ex.: Atacadão, Pão de Açúcar","E.g.: Walmart, Costco","Ej.: Mercadona, Carrefour"],
 ["Editar compra","Edit purchase","Editar compra"],["✎ Editar compra","✎ Edit purchase","✎ Editar compra"],["Apagar compra","Delete purchase","Eliminar compra"],["Concluir edição","Finish editing","Terminar edición"],["Compra salva","Purchase saved","Compra guardada"],["Compra apagada","Purchase deleted","Compra eliminada"],["Compra movida para {x}","Purchase moved to {x}","Compra movida a {x}"],
@@ -2096,7 +2097,9 @@ function escolherCompra(ctx = { tipo: "mercado" }) {
 function nfManual() {
   pararCamera();
   const ctx = S.nfCtx || { tipo: "mercado" };
-  if (ctx.tipo === "mercado") formCompra(); else formLanc(null, { tipo: "saida_variavel", categoria_id: ctx.cat || null });
+  const loja = S.nfPreset?.loja || ""; S.nfPreset = null;
+  if (ctx.tipo === "mercado") { formCompra(); if (loja && $("#cm") && !$("#cm").value) $("#cm").value = loja; }
+  else { formLanc(null, { tipo: "saida_variavel", categoria_id: ctx.cat || null }); const d = $("#ld"); if (loja && d && !d.value) d.value = loja; }
 }
 
 let nfCam = null;
@@ -2108,18 +2111,26 @@ function carregarJsQR() {
 async function detectorQR() {
   try { if ("BarcodeDetector" in window && (await BarcodeDetector.getSupportedFormats()).includes("qr_code")) { const d = new BarcodeDetector({ formats: ["qr_code"] }); return async src => (await d.detect(src))[0]?.rawValue || null; } } catch {}
   const jsQR = await carregarJsQR(); const cv = document.createElement("canvas"), cx = cv.getContext("2d", { willReadFrequently: true });
-  return async src => {
-    const w = src.videoWidth || src.naturalWidth || src.width, h = src.videoHeight || src.naturalHeight || src.height; if (!w || !h) return null;
-    const k = Math.min(1, 1000 / Math.max(w, h)); cv.width = Math.round(w * k); cv.height = Math.round(h * k);
-    cx.drawImage(src, 0, 0, cv.width, cv.height);
+  let vez = 0;
+  // o QR da nota é pequeno: lê o centro (onde fica a mira) em alta resolução e, alternando, a imagem inteira
+  const ler = (src, sx, sy, sw, sh, max) => {
+    const k = Math.min(1, max / Math.max(sw, sh)); cv.width = Math.round(sw * k); cv.height = Math.round(sh * k);
+    cx.drawImage(src, sx, sy, sw, sh, 0, 0, cv.width, cv.height);
     return jsQR(cx.getImageData(0, 0, cv.width, cv.height).data, cv.width, cv.height, { inversionAttempts: "attemptBoth" })?.data || null;
+  };
+  return async (src, foto) => {
+    const w = src.videoWidth || src.naturalWidth || src.width, h = src.videoHeight || src.naturalHeight || src.height; if (!w || !h) return null;
+    const lado = Math.min(w, h), c = Math.round(lado * 0.72);
+    if (foto) return ler(src, 0, 0, w, h, 1600) || ler(src, (w - c) / 2, (h - c) / 2, c, c, 1200) || ler(src, 0, 0, w, h, 900);
+    vez++;
+    return vez % 3 ? ler(src, (w - c) / 2, (h - c) / 2, c, c, 900) : ler(src, 0, 0, w, h, 1100);
   };
 }
 async function lerQR() {
   pararCamera();
   sheet(`<div class="nfwrap">${sheetHead("Escanear nota")}
     <div class="nfcam"><video id="nfVideo" playsinline muted autoplay></video><div class="nfmira" aria-hidden="true"></div><p id="nfStatus" class="nfstatus" role="status">Abrindo a câmera…</p></div>
-    <p class="muted nfdica">Aponte para o QR Code no rodapé da nota. Ele lê sozinho.</p>
+    <p class="muted nfdica">Deixe o QR Code do rodapé da nota dentro do quadrado, a um palmo da câmera. Ele lê sozinho.</p>
     <div class="nfmais">
       <label class="btn ghost nffoto">Usar foto da nota<input id="nfFoto" type="file" accept="image/*" capture="environment" hidden></label>
       <button type="button" class="btn ghost" data-act="nfColar">Colar link da nota</button>
@@ -2135,20 +2146,21 @@ async function lerQR() {
     if (!detectar) return toast("Leitor indisponível. Cole o link da nota.");
     const img = new Image(); img.src = URL.createObjectURL(f);
     try { await img.decode(); } catch { return toast("Não deu para abrir essa foto."); }
-    const v = await detectar(img).catch(() => null); URL.revokeObjectURL(img.src);
+    const v = await detectar(img, true).catch(() => null); URL.revokeObjectURL(img.src);
     if (v) { pararCamera(); processarNota(v); } else toast("Não achei o QR Code nessa foto. Tire de mais perto, com boa luz.");
   };
   if (!navigator.mediaDevices?.getUserMedia) return status("Câmera indisponível aqui. Use a foto ou cole o link.");
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1280 } }, audio: false });
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" }, width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: false });
     const video = $("#nfVideo"); if (!video) { stream.getTracks().forEach(t => t.stop()); return; }
+    try { const tr = stream.getVideoTracks()[0], cp = tr.getCapabilities?.() || {}; if (cp.focusMode?.includes("continuous")) await tr.applyConstraints({ advanced: [{ focusMode: "continuous" }] }); } catch {}
     nfCam = { stream, ativo: true }; video.srcObject = stream; await video.play().catch(() => {});
     status("Procurando o QR Code…");
     const cam = nfCam;
     const loop = async () => {
       if (!cam.ativo || !video.isConnected) return pararCamera();
       if (detectar && video.readyState >= 2) { const v = await detectar(video).catch(() => null); if (v && cam.ativo) { navigator.vibrate?.(60); pararCamera(); return processarNota(v); } }
-      setTimeout(loop, 220);
+      setTimeout(loop, 160);
     };
     loop();
   } catch (e) { status(e?.name === "NotAllowedError" ? "Permita o uso da câmera para ler a nota, ou use a foto." : "Não foi possível abrir a câmera. Use a foto ou cole o link."); }
@@ -2270,18 +2282,24 @@ async function processarNota(url) {
   let data, error;
   try { ({ data, error } = await sb.functions.invoke("ler-nfce", { body: { url } })); } catch (e) { error = e; }
   if (error || !data || data.erro) {
-    let msg = data?.erro;
-    if (!msg && error?.context?.json) { try { msg = (await error.context.json()).erro; } catch {} }
-    return nfErro(msg || "Não foi possível ler a nota agora. Tente de novo em alguns minutos.", url);
+    let msg = data?.erro, bloq = !!data?.bloqueado;
+    if (!msg && error?.context?.json) { try { const j = await error.context.json(); msg = j.erro; bloq = !!j.bloqueado; } catch {} }
+    return nfErro(msg || "Não foi possível ler a nota agora. Tente de novo em alguns minutos.", url, bloq);
   }
   revisarNota(data);
 }
-function nfErro(msg, url) {
+function nfErro(msg, url, bloqueado = false) {
+  S.nfUltimaUrl = url || null;
+  // da chave de acesso (44 dígitos) sai o CNPJ da loja: usamos para já preencher o nome
+  const chave = (decodeURIComponent(url || "").match(/\d{44}/) || [])[0];
+  S.nfPreset = chave ? { cnpj: chave.slice(6, 20) } : null;
+  const seguro = url && /^https?:\/\/[^/]+\.gov\.br\//i.test(url);
   sheet(`<div class="nfwrap">${sheetHead("Não deu para ler a nota")}
     <div class="nferro"><p>${esc(msg)}</p></div>
-    <div class="actions">${url ? `<button type="button" class="btn ghost" data-act="nfTentar">Tentar de novo</button>` : `<button type="button" class="btn ghost" data-act="nfQR">Escanear de novo</button>`}<button type="button" class="btn green" data-act="nfManual">Cadastrar manualmente</button></div>
+    ${bloqueado && seguro ? `<a class="btn ghost block nfver" href="${esc(url)}" target="_blank" rel="noopener">Ver a nota no site da Fazenda</a>` : ""}
+    <div class="actions">${bloqueado ? "" : url ? `<button type="button" class="btn ghost" data-act="nfTentar">Tentar de novo</button>` : `<button type="button" class="btn ghost" data-act="nfQR">Escanear de novo</button>`}<button type="button" class="btn green" data-act="nfManual">Cadastrar manualmente</button></div>
   </div>`);
-  S.nfUltimaUrl = url || null;
+  if (S.nfPreset?.cnpj && navigator.onLine) fetch(`https://brasilapi.com.br/api/cnpj/v1/${S.nfPreset.cnpj}`).then(r => r.ok ? r.json() : null).then(j => { if (j && S.nfPreset) S.nfPreset.loja = mercadoBonito(j.nome_fantasia || j.razao_social || ""); }).catch(() => {});
 }
 
 // Garante que todas as categorias novas existam (cria e liga para todo o app) e devolve nome → id
